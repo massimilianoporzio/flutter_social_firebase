@@ -1,10 +1,14 @@
 import 'dart:async';
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_social_firebase/firebase_options.dart';
 
 typedef AppBuilder = Future<Widget> Function();
 
 Future<void> bootstrap(AppBuilder builder) async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(await builder());
 }
 
