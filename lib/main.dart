@@ -22,8 +22,9 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Clean Architecture',
-      theme: ThemeData.light(useMaterial3: true),
+      theme: ThemeData.dark(useMaterial3: true),
       home: const HomeScreen(),
     );
   }
