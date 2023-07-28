@@ -6,6 +6,8 @@ import 'package:flutter/foundation.dart'
 
 import 'env/env.dart';
 
+const String kFirebaseKey = Env.firebaseKey;
+
 /// Default [FirebaseOptions] for use with your Firebase apps.
 ///
 /// Example:
@@ -49,7 +51,7 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: Env.firebaseKey,
+    apiKey: kFirebaseKey,
     appId: '1:540322739075:web:c91305b02e97bedd6ebcb6',
     messagingSenderId: '540322739075',
     projectId: 'fluttersocial-9a2ae',
@@ -58,7 +60,7 @@ class DefaultFirebaseOptions {
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: Env.firebaseKey,
+    apiKey: kFirebaseKey,
     appId: '1:540322739075:android:d3580e80284566786ebcb6',
     messagingSenderId: '540322739075',
     projectId: 'fluttersocial-9a2ae',
@@ -66,7 +68,7 @@ class DefaultFirebaseOptions {
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: Env.firebaseKey,
+    apiKey: kFirebaseKey,
     appId: '1:540322739075:ios:0e499b394500c5656ebcb6',
     messagingSenderId: '540322739075',
     projectId: 'fluttersocial-9a2ae',

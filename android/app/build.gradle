@@ -21,6 +21,13 @@ if (flutterVersionName == null) {
     flutterVersionName = '1.0'
 }
 
+def dartEnvironmentVariables = [
+    DARTDEFINE_APP_NAME: project.hasProperty('DARTDEFINE_APP_NAME')
+            ? DARTDEFINE_APP_NAME
+            : 'awesomeApp',
+    
+];
+
 apply plugin: 'com.android.application'
 // START: FlutterFire Configuration
 apply plugin: 'com.google.gms.google-services'
@@ -55,6 +62,7 @@ android {
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+        resValue "string", "app_name", dartEnvironmentVariables.DARTDEFINE_APP_NAME
     }
 
     buildTypes {
