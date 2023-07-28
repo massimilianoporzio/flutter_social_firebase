@@ -9,7 +9,7 @@ typedef AppBuilder = Future<Widget> Function();
 Future<void> bootstrap(AppBuilder builder) async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
-      name: 'flutter_social_firebase',
+      name: const String.fromEnvironment("DARTDEFINE_APP_NAME"),
       options: DefaultFirebaseOptions.currentPlatform);
   runApp(await builder());
 }
