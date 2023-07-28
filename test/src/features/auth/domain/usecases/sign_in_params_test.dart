@@ -4,13 +4,19 @@ import 'package:flutter_social_firebase/src/features/auth/domain/value_objects/p
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  Email email1 = Email((b) => b.value = 'test1@test.com');
+  late Email email1;
+  late Email email2;
+  late Password password1;
+  late Password password2;
+  setUp(() {
+    email1 = Email((b) => b.value = 'test1@test.com');
 
-  Email email2 = Email((b) => b.value = 'test2@test.com');
+    email2 = Email((b) => b.value = 'test2@test.com');
 
-  Password password1 = Password((b) => b.value = "pippo123");
+    password1 = Password((b) => b.value = "pippo123");
 
-  Password password2 = Password((b) => b.value = "pluto456");
+    password2 = Password((b) => b.value = "pluto456");
+  });
 
   test('Two SignInParams with same emails and passwords are equal', () {
     final params1 = SignInParams(email: email1, password: password1);
