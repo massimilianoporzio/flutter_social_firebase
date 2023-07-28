@@ -4,9 +4,11 @@ import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
 import 'package:flutter/foundation.dart'
     show defaultTargetPlatform, kIsWeb, TargetPlatform;
 
-import 'env/env.dart';
+// import 'env/env.dart';
 
-const String kFirebaseKey = Env.firebaseKey;
+// const String kFirebaseKey = Env.firebaseKey; // con envied
+const String kFirebaseKey =
+    String.fromEnvironment('FIREBASE_KEY'); // con --dart-define-from-file
 
 /// Default [FirebaseOptions] for use with your Firebase apps.
 ///
