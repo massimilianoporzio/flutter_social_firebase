@@ -15,7 +15,7 @@ class AuthUser extends Equatable {
   static const AuthUser empty =
       AuthUser(id: '', email: '', name: '', photURL: '');
 
-  bool get isEmpty => this == AuthUser.empty; //BUSINESS RULE
+  bool get isEmpty => this == AuthUser.empty; //BUSINESS RULE=>TEST IT!
 
   @override
   List<Object?> get props => [id, email, name, photURL];
