@@ -49,7 +49,7 @@ void main() {
         .thenThrow(Exception());
 
     final call = signUpUsecase.call;
-    expect(() => call(tSignUpParams), throwsA(isInstanceOf<Exception>()));
+    expect(() => call(tSignUpParams), throwsA(isA<Exception>()));
   });
 
   test(

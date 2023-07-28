@@ -41,8 +41,8 @@ class MockAuthRepository extends _i1.Mock implements _i3.AuthRepository {
   }
 
   @override
-  _i4.Stream<_i2.AuthUser> get authUserStrem => (super.noSuchMethod(
-        Invocation.getter(#authUserStrem),
+  _i4.Stream<_i2.AuthUser> get authUserStream => (super.noSuchMethod(
+        Invocation.getter(#authUserStream),
         returnValue: _i4.Stream<_i2.AuthUser>.empty(),
       ) as _i4.Stream<_i2.AuthUser>);
   @override

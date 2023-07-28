@@ -1,7 +1,9 @@
+import 'dart:async';
+
 import 'package:equatable/equatable.dart';
 
 abstract class UseCase<Type, Params> {
-  Future<Type> call(Params params);
+  FutureOr<Type> call(Params params);
 }
 
 abstract class Params extends Equatable {
