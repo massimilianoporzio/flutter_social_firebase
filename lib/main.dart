@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_social_firebase/firebase_options.dart';
 import 'package:flutter_social_firebase/src/services/service_locator.dart'
     as di;
+import 'package:loggy/loggy.dart';
 
 typedef AppBuilder = Future<Widget> Function();
 
@@ -14,6 +15,10 @@ Future<void> bootstrap(AppBuilder builder) async {
       name: const String.fromEnvironment("DARTDEFINE_APP_NAME"),
       options: DefaultFirebaseOptions.currentPlatform);
   await di.init();
+  //iniziallizza il logger con la stampa a video colorata
+  Loggy.initLoggy(
+    logPrinter: const PrettyPrinter(),
+  );
   runApp(await builder());
 }
 
