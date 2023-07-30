@@ -13,22 +13,41 @@ class AuthRemoteDatasourceFirebase implements AuthRemoteDatasource {
 
   @override
   Future<AuthUserModel> signInWithEmailAndPassword(
-      {required String email, required String password}) {
-    // TODO: implement signInWithEmailAndPassword
-    throw UnimplementedError();
+      {required String email, required String password}) async {
+    try {
+      firebase_auth.UserCredential credential = await _firebaseAuth
+          .signInWithEmailAndPassword(email: email, password: password);
+
+      return AuthUserModel.fromFirebaseAuthUser(credential.user!);
+    } catch (error) {
+      //TODO gestire le eccezioni firebase (user does not exists ecc.)
+      throw Exception('Sign in failed: $error');
+    }
   }
 
   @override
-  Future<void> signOut() {
-    // TODO: implement signOut
-    throw UnimplementedError();
+  Future<void> signOut() async {
+    try {
+      await _firebaseAuth.signOut();
+    } catch (error) {
+      throw Exception('Sign out failed: $error');
+    }
   }
 
   @override
   Future<AuthUserModel> signUpWithEmailAndPassword(
-      {required String email, required String password}) {
-    // TODO: implement signUpWithEmailAndPassword
-    throw UnimplementedError();
+      {required String email, required String password}) async {
+    try {
+      //recupero le credentials con email and password
+      firebase_auth.UserCredential credential = await _firebaseAuth
+          .createUserWithEmailAndPassword(email: email, password: password);
+
+      return AuthUserModel.fromFirebaseAuthUser(
+          credential.user!); //so che non è null perché ho appena controllato
+    } catch (error) {
+      //TODO gestire le eccezioni firebase (weak password ecc.)
+      throw Exception('Sign up failed: $error');
+    }
   }
 
   @override
