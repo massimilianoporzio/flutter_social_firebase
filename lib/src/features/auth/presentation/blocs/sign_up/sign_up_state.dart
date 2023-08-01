@@ -27,9 +27,7 @@ class SignUpState extends Equatable {
     ];
   }
 
-  factory SignUpState.initial() {
-    return const SignUpState();
-  }
+  const SignUpState.initial() : this();
 
   SignUpState copyWith({
     Email? email,
