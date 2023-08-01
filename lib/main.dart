@@ -1,11 +1,18 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:async';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+
 import 'package:flutter_social_firebase/firebase_options.dart';
+import 'package:flutter_social_firebase/src/features/auth/domain/entities/auth_user.dart';
+import 'package:flutter_social_firebase/src/features/auth/domain/repositories/auth_repository.dart';
+import 'package:flutter_social_firebase/src/features/auth/presentation/pages/sign_up_screen.dart';
 import 'package:flutter_social_firebase/src/services/service_locator.dart'
     as di;
 import 'package:loggy/loggy.dart';
+
+import 'src/services/service_locator.dart';
 
 typedef AppBuilder = Future<Widget> Function();
 
@@ -25,13 +32,21 @@ Future<void> bootstrap(AppBuilder builder) async {
 void main() {
   bootstrap(
     () async {
-      return const App();
+      return App(
+        authUser: await sl<AuthRepository>()
+            .authUserStream
+            .first, //recupero il primo dallo stream
+      );
     },
   );
 }
 
 class App extends StatelessWidget {
-  const App({super.key});
+  final AuthUser? authUser;
+  const App({
+    Key? key,
+    this.authUser,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +54,7 @@ class App extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Clean Architecture',
       theme: ThemeData.dark(useMaterial3: true),
-      home: const HomeScreen(),
+      home: const SignUpScreen(),
     );
   }
 }
