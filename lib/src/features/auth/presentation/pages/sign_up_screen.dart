@@ -40,6 +40,7 @@ class __SignupViewState extends State<_SignupView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: const Text('Sign Up'),
       ),
       body: BlocConsumer<SignUpCubit, SignUpState>(
