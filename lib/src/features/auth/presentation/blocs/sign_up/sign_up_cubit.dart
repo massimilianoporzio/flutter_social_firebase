@@ -4,18 +4,19 @@ import 'package:flutter_social_firebase/src/features/auth/domain/usecases/sign_u
 import 'package:flutter_social_firebase/src/features/auth/presentation/blocs/email_status.dart';
 import 'package:flutter_social_firebase/src/features/auth/presentation/blocs/form_status.dart';
 import 'package:flutter_social_firebase/src/features/auth/presentation/blocs/password_status.dart';
+import 'package:flutter_social_firebase/src/logs/bloc_logger.dart';
 
 import '../../../domain/value_objects/email.dart';
 import '../../../domain/value_objects/password.dart';
 
 part 'sign_up_state.dart';
 
-class SignUpCubit extends Cubit<SignUpState> {
+class SignUpCubit extends Cubit<SignUpState> with BlocLoggy {
   //dipende da un caso d'uso
   final SignUpUsecase _signUpUsecase;
   SignUpCubit({required SignUpUsecase signupUseCase})
       : _signUpUsecase = signupUseCase,
-        super(SignUpState.initial());
+        super(const SignUpState.initial());
   //metodi chiamti quando cambia l'input nella UI
   void emailChanged(String value) {
     try {
@@ -39,6 +40,26 @@ class SignUpCubit extends Cubit<SignUpState> {
     } on ArgumentError {
       emit(state.copyWith(passwordStatus: PasswordStatus.invalid));
     }
+  }
+
+  Future<void> resetEmailInput() async {
+    loggy.debug('reset email input');
+
+    emit(
+      state.copyWith(
+        emailStatus: EmailStatus.unknown,
+      ),
+    );
+  }
+
+  Future<void> resetPasswordInput() async {
+    loggy.debug('reset password input');
+
+    emit(
+      state.copyWith(
+        passwordStatus: PasswordStatus.unknown,
+      ),
+    );
   }
 
   Future<void> signUp() async {
