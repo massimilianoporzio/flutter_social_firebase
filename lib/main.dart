@@ -7,11 +7,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_social_firebase/firebase_options.dart';
 import 'package:flutter_social_firebase/src/features/auth/domain/entities/auth_user.dart';
 import 'package:flutter_social_firebase/src/features/auth/domain/repositories/auth_repository.dart';
-import 'package:flutter_social_firebase/src/features/auth/presentation/pages/sign_up_screen.dart';
+
 import 'package:flutter_social_firebase/src/services/service_locator.dart'
     as di;
 import 'package:loggy/loggy.dart';
 
+import 'src/features/auth/presentation/pages/sign_in_screen.dart';
 import 'src/services/service_locator.dart';
 
 typedef AppBuilder = Future<Widget> Function();
@@ -54,7 +55,7 @@ class App extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Clean Architecture',
       theme: ThemeData.dark(useMaterial3: true),
-      home: const SignUpScreen(),
+      home: const SignInScreen(),
     );
   }
 }

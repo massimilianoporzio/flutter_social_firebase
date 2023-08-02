@@ -3,7 +3,9 @@ import 'package:flutter_social_firebase/src/features/auth/data/datasources/auth_
 import 'package:flutter_social_firebase/src/features/auth/data/datasources/auth_remote_datasource_firebase.dart';
 import 'package:flutter_social_firebase/src/features/auth/data/repositories/auth_repository_impl.dart';
 import 'package:flutter_social_firebase/src/features/auth/domain/repositories/auth_repository.dart';
+import 'package:flutter_social_firebase/src/features/auth/domain/usecases/sign_in_usecase.dart';
 import 'package:flutter_social_firebase/src/features/auth/domain/usecases/sign_up_usecase.dart';
+import 'package:flutter_social_firebase/src/features/auth/presentation/blocs/sign_in/sign_in_cubit.dart';
 import 'package:flutter_social_firebase/src/features/auth/presentation/blocs/sign_up/sign_up_cubit.dart';
 import 'package:get_it/get_it.dart';
 
@@ -36,10 +38,16 @@ Future<void> init() async {
   //signup
   sl.registerLazySingleton<SignUpUsecase>(
       () => SignUpUsecase(authRepository: sl<AuthRepository>()));
+  //signin
+  sl.registerLazySingleton<SignInUsecase>(
+      () => SignInUsecase(authRepository: sl<AuthRepository>()));
 
   //**** BLOCS/CUBITS ****/
   //*AUTH
   //signup
   sl.registerFactory<SignUpCubit>(
       () => SignUpCubit(signupUseCase: sl<SignUpUsecase>()));
+  //signin
+  sl.registerFactory<SignInCubit>(
+      () => SignInCubit(signInUsecase: sl<SignInUsecase>()));
 }
