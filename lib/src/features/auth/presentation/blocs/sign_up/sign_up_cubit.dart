@@ -19,6 +19,7 @@ class SignUpCubit extends Cubit<SignUpState> with BlocLoggy {
         super(const SignUpState.initial());
   //metodi chiamti quando cambia l'input nella UI
   void emailChanged(String value) {
+    loggy.debug('emailChanged');
     try {
       Email email = Email((p0) => p0.value = value);
       emit(state.copyWith(
@@ -31,6 +32,7 @@ class SignUpCubit extends Cubit<SignUpState> with BlocLoggy {
   }
 
   void passwordChanged(String value) {
+    loggy.debug("passwordChanged");
     try {
       Password password = Password(
         (p0) => p0.value = value,
@@ -63,6 +65,7 @@ class SignUpCubit extends Cubit<SignUpState> with BlocLoggy {
   }
 
   Future<void> signUp() async {
+    loggy.debug("signUp called");
     if (!(state.emailStatus == EmailStatus.valid) ||
         !(state.passwordStatus == PasswordStatus.valid)) {
       emit(state.copyWith(formStatus: FormStatus.invalid));

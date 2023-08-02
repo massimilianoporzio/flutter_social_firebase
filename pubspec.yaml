@@ -29,7 +29,7 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   awesome_snackbar_content: ^0.1.3
-  bloc_test: ^9.1.3
+  bloc_test: ^9.1.4
   botion_flutter_plugin: ^0.0.1
   built_value: ^8.6.1
   cloud_firestore: ^4.8.4

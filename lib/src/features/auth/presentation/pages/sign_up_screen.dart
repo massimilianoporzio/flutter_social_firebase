@@ -32,10 +32,13 @@ class _SignupView extends StatefulWidget {
 
 class __SignupViewState extends State<_SignupView> with UiLoggy {
   Timer? debounce; //aspettare tot ms DOPO che user ha smesso di scrivere
-
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
   @override
   void dispose() {
     debounce?.cancel();
+    emailController.dispose();
+    passwordController.dispose();
     super.dispose();
   }
 
@@ -77,7 +80,7 @@ class __SignupViewState extends State<_SignupView> with UiLoggy {
                   content: AwesomeSnackbarContent(
                     title: 'Error!',
                     message:
-                        'There was an error with the sign up process. Please, try again.',
+                        'There was an error with the sign up process. Try again.',
                     inMaterialBanner: true,
                     color: Colors.red.shade900,
 
@@ -98,7 +101,16 @@ class __SignupViewState extends State<_SignupView> with UiLoggy {
               children: [
                 TextFormField(
                   key: const Key('signUp_emailInput_textField'),
+                  keyboardType: TextInputType.emailAddress,
+                  controller: emailController,
                   decoration: InputDecoration(
+                    suffixIcon: state.emailStatus == EmailStatus.unknown
+                        ? null
+                        : IconButton(
+                            // Icon to
+                            icon: const Icon(Icons.clear), // clear text
+                            onPressed: clearTextEmail,
+                          ),
                     labelText: 'Email',
                     errorText: state.emailStatus == EmailStatus.invalid
                         ? 'Invalid email'
@@ -123,12 +135,20 @@ class __SignupViewState extends State<_SignupView> with UiLoggy {
                 ),
                 TextFormField(
                   key: const Key('signUp_passwordInput_textField'),
-                  keyboardType: TextInputType.emailAddress,
+                  controller: passwordController,
+                  keyboardType: TextInputType.text,
                   obscureText: true,
                   decoration: InputDecoration(
                       labelText: 'Password',
+                      suffixIcon: state.passwordStatus == PasswordStatus.unknown
+                          ? null
+                          : IconButton(
+                              // Icon to
+                              icon: const Icon(Icons.clear), // clear text
+                              onPressed: clearTextPassword,
+                            ),
                       errorText: state.passwordStatus == PasswordStatus.invalid
-                          ? 'Invalid Password'
+                          ? 'Invalid password'
                           : null),
                   onChanged: (value) {
                     if (value.isEmpty) {
@@ -158,5 +178,17 @@ class __SignupViewState extends State<_SignupView> with UiLoggy {
         },
       ),
     );
+  }
+
+  void clearTextPassword() {
+    context.read<SignUpCubit>().resetEmailInput();
+
+    emailController.clear();
+  }
+
+  void clearTextEmail() {
+    context.read<SignUpCubit>().resetPasswordInput();
+
+    passwordController.clear();
   }
 }
