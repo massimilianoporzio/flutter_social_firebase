@@ -97,7 +97,7 @@ class __SignupViewState extends State<_SignupView> with UiLoggy {
             child: Column(
               children: [
                 TextFormField(
-                  key: const Key('signup_emailInput_textField'),
+                  key: const Key('signUp_emailInput_textField'),
                   decoration: InputDecoration(
                     labelText: 'Email',
                     errorText: state.emailStatus == EmailStatus.invalid
@@ -122,7 +122,7 @@ class __SignupViewState extends State<_SignupView> with UiLoggy {
                   },
                 ),
                 TextFormField(
-                  key: const Key('signup_passwordInput_textField'),
+                  key: const Key('signUp_passwordInput_textField'),
                   keyboardType: TextInputType.emailAddress,
                   obscureText: true,
                   decoration: InputDecoration(
