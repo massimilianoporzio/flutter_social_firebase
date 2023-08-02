@@ -52,6 +52,12 @@ void main() {
       ],
     );
     blocTest(
+      'emits [unknown email state] when user clear email fiels',
+      build: () => SignUpCubit(signupUseCase: mockSignUpUsecase),
+      act: (bloc) => bloc.resetEmailInput(),
+      expect: () => [const SignUpState(emailStatus: EmailStatus.unknown)],
+    );
+    blocTest(
       'emits [valid password state] when valid password is added',
       build: () => SignUpCubit(signupUseCase: mockSignUpUsecase),
       act: (cubit) => cubit.passwordChanged(validPassword.value),
@@ -64,7 +70,7 @@ void main() {
       ],
     );
     blocTest(
-      'emits [invalid password state] when invalid email is added',
+      'emits [invalid password state] when invalid password is added',
       build: () => SignUpCubit(signupUseCase: mockSignUpUsecase),
       act: (cubit) => cubit.passwordChanged('invalid'),
       expect: () => [
@@ -73,6 +79,12 @@ void main() {
           passwordStatus: PasswordStatus.invalid,
         ),
       ],
+    );
+    blocTest(
+      'emits [unknown password state] when user clear password fiels',
+      build: () => SignUpCubit(signupUseCase: mockSignUpUsecase),
+      act: (bloc) => bloc.resetPasswordInput(),
+      expect: () => [const SignUpState(passwordStatus: PasswordStatus.unknown)],
     );
     blocTest<SignUpCubit, SignUpState>(
       'emits formStatus [invalid, initial] when the form is not validated',

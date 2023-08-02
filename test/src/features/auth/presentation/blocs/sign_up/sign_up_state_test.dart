@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter_social_firebase/src/features/auth/domain/value_objects/email.dart';
 import 'package:flutter_social_firebase/src/features/auth/domain/value_objects/password.dart';
 import 'package:flutter_social_firebase/src/features/auth/presentation/blocs/email_status.dart';
