@@ -114,7 +114,7 @@ void main() {
     ],
   );
   blocTest<SignInCubit, SignInState>(
-    'emits [submissionInProgress, submissionSuccess] when signUp is successful',
+    'emits [submissionInProgress, submissionSuccess] when signIn is successful',
     setUp: () {
       when(mockSignInUsecase(any)).thenAnswer(
         (_) => Future.value(
@@ -153,7 +153,7 @@ void main() {
     },
   );
   blocTest<SignInCubit, SignInState>(
-    'emits [submissionInProgress, submissionFailure] when signUp is NOT successful',
+    'emits [submissionInProgress, submissionFailure] when signIn is NOT successful',
     setUp: () {
       when(mockSignInUsecase(any)).thenThrow(Exception());
     },
