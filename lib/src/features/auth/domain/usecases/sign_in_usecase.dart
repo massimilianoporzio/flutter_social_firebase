@@ -6,9 +6,9 @@ import 'package:flutter_social_firebase/src/features/auth/domain/value_objects/p
 
 import '../value_objects/email.dart';
 
-class SignInUsecase extends UseCase<AuthUser, SignInParams> {
+class SignInUseCase extends UseCase<AuthUser, SignInParams> {
   final AuthRepository authRepository;
-  SignInUsecase({
+  SignInUseCase({
     required this.authRepository,
   });
   @override

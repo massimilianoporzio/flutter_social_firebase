@@ -10,13 +10,13 @@ import 'stream_auth_user_usecase_test.mocks.dart';
 
 @GenerateMocks([AuthRepository])
 void main() {
-  late StreamAuthUserUsecase streamAuthUserUsecase;
+  late StreamAuthUserUseCase streamAuthUserUsecase;
   late MockAuthRepository mockAuthRepository;
 
   setUp(() {
     mockAuthRepository = MockAuthRepository();
     streamAuthUserUsecase =
-        StreamAuthUserUsecase(authRepository: mockAuthRepository);
+        StreamAuthUserUseCase(authRepository: mockAuthRepository);
   });
   const tAuthUser = AuthUser(id: "123", email: "test@test.com");
 
@@ -24,7 +24,7 @@ void main() {
     when(mockAuthRepository.authUserStream)
         .thenAnswer((realInvocation) => Stream.value(tAuthUser));
 
-    streamAuthUserUsecase.call(NoParams());
+    streamAuthUserUsecase.call();
     verify(mockAuthRepository.authUserStream); //verifico che venga chiamato
   });
 
@@ -33,7 +33,7 @@ void main() {
       () {
     when(mockAuthRepository.authUserStream).thenThrow(Exception());
     final call = streamAuthUserUsecase.call;
-    expect(() => call(NoParams()), throwsA(isA<Exception>()));
+    expect(() => call(), throwsA(isA<Exception>()));
   });
 
   test(
@@ -44,7 +44,7 @@ void main() {
         .thenAnswer((realInvocation) => Stream.value(tAuthUser));
 
     //Stream
-    final result = await streamAuthUserUsecase.call(NoParams());
+    final result = await streamAuthUserUsecase.call();
     //primo elemento dello stream
     final user = await result
         .first; //torna il primo elemento e smette di ascoltare lo stream

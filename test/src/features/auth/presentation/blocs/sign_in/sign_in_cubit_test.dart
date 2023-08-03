@@ -13,7 +13,7 @@ import 'package:mockito/mockito.dart';
 
 import 'sign_in_cubit_test.mocks.dart';
 
-@GenerateMocks([SignInUsecase])
+@GenerateMocks([SignInUseCase])
 void main() {
   late MockSignInUsecase mockSignInUsecase;
 

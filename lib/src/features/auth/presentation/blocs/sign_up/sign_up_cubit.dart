@@ -13,8 +13,8 @@ part 'sign_up_state.dart';
 
 class SignUpCubit extends Cubit<SignUpState> with BlocLoggy {
   //dipende da un caso d'uso
-  final SignUpUsecase _signUpUsecase;
-  SignUpCubit({required SignUpUsecase signupUseCase})
+  final SignUpUseCase _signUpUsecase;
+  SignUpCubit({required SignUpUseCase signupUseCase})
       : _signUpUsecase = signupUseCase,
         super(const SignUpState.initial());
   //metodi chiamti quando cambia l'input nella UI

@@ -53,24 +53,24 @@ Future<void> init() async {
   //**** USECASE ****/
   //*AUTH
   //signup
-  sl.registerLazySingleton<SignUpUsecase>(
-      () => SignUpUsecase(authRepository: sl<AuthRepository>()));
+  sl.registerLazySingleton<SignUpUseCase>(
+      () => SignUpUseCase(authRepository: sl<AuthRepository>()));
   //signin
-  sl.registerLazySingleton<SignInUsecase>(
-      () => SignInUsecase(authRepository: sl<AuthRepository>()));
+  sl.registerLazySingleton<SignInUseCase>(
+      () => SignInUseCase(authRepository: sl<AuthRepository>()));
   //streamAuth SINGLETON per tutta la app
-  sl.registerSingleton<StreamAuthUserUsecase>(
-      StreamAuthUserUsecase(authRepository: sl<AuthRepository>()));
+  sl.registerSingleton<StreamAuthUserUseCase>(
+      StreamAuthUserUseCase(authRepository: sl<AuthRepository>()));
   //streamTheme SINGLETON per tutta la app
-  sl.registerSingleton<StreamThemeUsecase>(
-      StreamThemeUsecase(themeRepository: sl()));
+  sl.registerSingleton<StreamThemeUseCase>(
+      StreamThemeUseCase(themeRepository: sl()));
 
   //**** BLOCS/CUBITS ****/
   //*AUTH
   //signup
   sl.registerFactory<SignUpCubit>(
-      () => SignUpCubit(signupUseCase: sl<SignUpUsecase>()));
+      () => SignUpCubit(signupUseCase: sl<SignUpUseCase>()));
   //signin
   sl.registerFactory<SignInCubit>(
-      () => SignInCubit(signInUsecase: sl<SignInUsecase>()));
+      () => SignInCubit(signInUsecase: sl<SignInUseCase>()));
 }

@@ -11,11 +11,11 @@ import 'sign_up_usecase_test.mocks.dart';
 
 @GenerateMocks([AuthRepository]) //MOCKITO
 void main() {
-  late SignUpUsecase signUpUsecase;
+  late SignUpUseCase signUpUsecase;
   late MockAuthRepository mockAuthRepository;
   setUp(() {
     mockAuthRepository = MockAuthRepository(); //è FAKE
-    signUpUsecase = SignUpUsecase(authRepository: mockAuthRepository);
+    signUpUsecase = SignUpUseCase(authRepository: mockAuthRepository);
   });
 
   //definisco variabili per poi testare il caso d'uso

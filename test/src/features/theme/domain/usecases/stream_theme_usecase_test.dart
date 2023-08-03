@@ -11,18 +11,18 @@ import 'stream_theme_usecase_test.mocks.dart';
 @GenerateNiceMocks([MockSpec<ThemeRepository>()])
 void main() {
   late MockThemeRepository mockThemeRepository;
-  late StreamThemeUsecase streamThemeUsecase; //ogg del test
+  late StreamThemeUseCase streamThemeUsecase; //ogg del test
   setUp(() {
     mockThemeRepository = MockThemeRepository();
     streamThemeUsecase =
-        StreamThemeUsecase(themeRepository: mockThemeRepository);
+        StreamThemeUseCase(themeRepository: mockThemeRepository);
   });
   const tCustomTheme = CustomTheme.dark;
   test('should call the getter on theme repo', () {
     when(mockThemeRepository.currentThemeStream)
         .thenAnswer((realInvocation) => Stream.value(tCustomTheme));
     //CHIAMO IL CASO D'USO
-    streamThemeUsecase.call(NoParams());
+    streamThemeUsecase.call();
     //VERIFICO SIA CHIAMATO
     verify(mockThemeRepository.currentThemeStream);
   });
@@ -32,7 +32,7 @@ void main() {
       () {
     when(mockThemeRepository.currentThemeStream).thenThrow(Exception());
     final call = streamThemeUsecase.call;
-    expect(() => call(NoParams()), throwsA(isA<Exception>()));
+    expect(() => call(), throwsA(isA<Exception>()));
   });
   test(
       'should return the CORRECT CustomTheme when the getter on Theme repo return a CustomTheme',
@@ -42,7 +42,7 @@ void main() {
         .thenAnswer((realInvocation) => Stream.value(tCustomTheme));
 
     //Stream
-    final result = await streamThemeUsecase.call(NoParams());
+    final result = await streamThemeUsecase.call();
     //primo elemento dello stream
     final theme = await result
         .first; //torna il primo elemento e smette di ascoltare lo stream

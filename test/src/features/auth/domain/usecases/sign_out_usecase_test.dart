@@ -9,12 +9,12 @@ import 'sign_out_usecase_test.mocks.dart';
 
 @GenerateMocks([AuthRepository])
 void main() {
-  late SignOutUsecase signOutUsecase;
+  late SignOutUseCase signOutUsecase;
   late MockAuthRepository mockAuthRepository;
 
   setUp(() {
     mockAuthRepository = MockAuthRepository();
-    signOutUsecase = SignOutUsecase(authRepository: mockAuthRepository);
+    signOutUsecase = SignOutUseCase(authRepository: mockAuthRepository);
   });
 
   test('should call signOut method on AuthRepository', () async {

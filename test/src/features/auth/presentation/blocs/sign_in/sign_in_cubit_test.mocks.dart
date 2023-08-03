@@ -48,7 +48,7 @@ class _FakeAuthUser_1 extends _i1.SmartFake implements _i3.AuthUser {
 /// A class which mocks [SignInUsecase].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockSignInUsecase extends _i1.Mock implements _i4.SignInUsecase {
+class MockSignInUsecase extends _i1.Mock implements _i4.SignInUseCase {
   MockSignInUsecase() {
     _i1.throwOnMissingStub(this);
   }

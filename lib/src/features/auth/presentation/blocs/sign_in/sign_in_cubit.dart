@@ -14,8 +14,8 @@ part 'sign_in_state.dart';
 
 class SignInCubit extends Cubit<SignInState> with BlocLoggy {
   //dipende da un caso d'uso
-  final SignInUsecase _signInUsecase;
-  SignInCubit({required SignInUsecase signInUsecase})
+  final SignInUseCase _signInUsecase;
+  SignInCubit({required SignInUseCase signInUsecase})
       : _signInUsecase = signInUsecase,
         super(SignInInitial());
 

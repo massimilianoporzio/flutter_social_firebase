@@ -7,12 +7,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_social_firebase/firebase_options.dart';
 import 'package:flutter_social_firebase/src/features/auth/domain/entities/auth_user.dart';
 import 'package:flutter_social_firebase/src/features/auth/domain/repositories/auth_repository.dart';
+import 'package:flutter_social_firebase/src/features/theme/domain/repositories/theme_repository.dart';
 
 import 'package:flutter_social_firebase/src/services/service_locator.dart'
     as di;
 import 'package:loggy/loggy.dart';
 
-import 'src/features/auth/presentation/pages/sign_in_screen.dart';
 import 'src/services/service_locator.dart';
 import 'src/shared/app/app.dart';
 
@@ -35,10 +35,12 @@ void main() {
   bootstrap(
     () async {
       return App(
-        authUser: await sl<AuthRepository>()
-            .authUserStream
-            .first, //recupero il primo dallo stream
-      );
+          authUser: await sl<AuthRepository>()
+              .authUserStream
+              .first, //recupero il primo dallo stream e smetto di ascoltare
+          theme: await sl<ThemeRepository>()
+              .currentThemeStream
+              .first); //init da shared_prefs
     },
   );
 }

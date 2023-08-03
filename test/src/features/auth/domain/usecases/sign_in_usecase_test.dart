@@ -14,12 +14,12 @@ import 'sign_in_usecase_test.mocks.dart';
 
 @GenerateMocks([AuthRepository]) //MOCKITO
 void main() {
-  late SignInUsecase signInUsecase;
+  late SignInUseCase signInUsecase;
   late MockAuthRepository mockAuthRepository;
   //initialize tests
   setUp(() {
     mockAuthRepository = MockAuthRepository(); //è FAKE
-    signInUsecase = SignInUsecase(authRepository: mockAuthRepository);
+    signInUsecase = SignInUseCase(authRepository: mockAuthRepository);
   });
   //definisco variabili
   final tEmail = Email((p0) => p0.value = "test@test.com");
