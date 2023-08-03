@@ -1,4 +1,4 @@
-import 'package:flutter_social_firebase/src/core/domain/usecases/base_usecase.dart';
+import 'package:flutter_social_firebase/src/shared/domain/usecases/base_usecase.dart';
 import 'package:flutter_social_firebase/src/features/auth/domain/repositories/auth_repository.dart';
 import 'package:flutter_social_firebase/src/features/auth/domain/usecases/sign_out_usecase.dart';
 import 'package:flutter_test/flutter_test.dart';

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_social_firebase/src/shared/presentation/widgets/custon_app_bar.dart';
 import 'package:loggy/loggy.dart';
 
 import '../../../../services/service_locator.dart';
@@ -45,9 +46,12 @@ class __SignInViewState extends State<_SignInView> with UiLoggy {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: const Text('Sign In'),
+      // appBar: AppBar(
+      //   centerTitle: true,
+      //   title: const Text('Sign In'),
+      // ),
+      appBar: const CustomAppBar(
+        title: 'Sign In',
       ),
       body: BlocConsumer<SignInCubit, SignInState>(
         listener: (context, state) {

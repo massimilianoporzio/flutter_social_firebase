@@ -14,6 +14,7 @@ import 'package:loggy/loggy.dart';
 
 import 'src/features/auth/presentation/pages/sign_in_screen.dart';
 import 'src/services/service_locator.dart';
+import 'src/shared/app/app.dart';
 
 typedef AppBuilder = Future<Widget> Function();
 
@@ -40,24 +41,6 @@ void main() {
       );
     },
   );
-}
-
-class App extends StatelessWidget {
-  final AuthUser? authUser;
-  const App({
-    Key? key,
-    this.authUser,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Clean Architecture',
-      theme: ThemeData.dark(useMaterial3: true),
-      home: const SignInScreen(),
-    );
-  }
 }
 
 class HomeScreen extends StatelessWidget {
