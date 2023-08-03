@@ -12,7 +12,6 @@ part 'theme_state.dart';
 class ThemeCubit extends Cubit<ThemeState> {
   final ThemeRepository _themeRepository;
 
-  static late bool _isDarkTheme;
   ThemeCubit({required ThemeRepository themeRepository})
       : _themeRepository = themeRepository,
         super(const ThemeState());
@@ -29,8 +28,8 @@ class ThemeCubit extends Cubit<ThemeState> {
   //   });
   // }
 
-  void switchTheme() {
-    if (_isDarkTheme) {
+  void switchTheme(bool isDarkTheme) {
+    if (isDarkTheme) {
       _themeRepository.saveTheme(CustomTheme.light); //salvo light
     } else {
       _themeRepository.saveTheme(CustomTheme.dark);
