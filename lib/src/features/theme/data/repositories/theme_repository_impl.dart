@@ -4,18 +4,18 @@ import 'package:flutter_social_firebase/src/features/theme/data/datasources/them
 
 import 'package:flutter_social_firebase/src/features/theme/domain/entities/custom_theme.dart';
 import 'package:flutter_social_firebase/src/features/theme/domain/repositories/theme_repository.dart';
+import 'package:flutter_social_firebase/src/logs/repository_logger.dart';
 
-class ThemeRepositoryImpl implements ThemeRepository {
+class ThemeRepositoryImpl with RepositoryLoggy implements ThemeRepository {
   final ThemeLocalDatasource localDatasource;
 
   final _controller = StreamController<CustomTheme>();
-
   static const _kThemePersistenceKey = '__theme_persistence_key__';
   ThemeRepositoryImpl({required this.localDatasource}) {
     _init();
   }
   @override
-  Stream<CustomTheme> get currentThemeStream async* {
+  Stream<CustomTheme> getTheme() async* {
     yield* _controller.stream;
   }
 
@@ -26,7 +26,9 @@ class ThemeRepositoryImpl implements ThemeRepository {
 
   @override
   Future<void> saveTheme(CustomTheme theme) async {
+    loggy.debug("saving theme: $theme");
     _controller.add(theme); //lo metto in stream
+
     localDatasource.setValue(_kThemePersistenceKey, theme.name);
   }
 

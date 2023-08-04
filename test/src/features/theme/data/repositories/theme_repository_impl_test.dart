@@ -24,7 +24,7 @@ void main() {
   group('currentThemeStream', () {
     test('return [CustomTheme.light] as results of init()', () async {
       //chiamo
-      final theme = await themeRepository.currentThemeStream.first;
+      final theme = await themeRepository.getTheme().first;
       //verifico
       expect(theme, tCustomThemeLight);
     });
@@ -38,7 +38,7 @@ void main() {
       //     themeRepository.currentThemeStream, emitsThrough(CustomTheme.dark));
       //meglio verifico che nell'ordine ci siano light (quando creo il repo)
       //e poi dark (che ho appena scritto)
-      expect(themeRepository.currentThemeStream,
+      expect(themeRepository.getTheme(),
           emitsInOrder([CustomTheme.light, CustomTheme.dark]));
     });
     test('Should throw an exception when themeRepo throws an Exception',

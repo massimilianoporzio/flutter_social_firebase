@@ -6,32 +6,37 @@ enum AppStatus { unknown, authenticated, unauthenticated }
 class AppState extends Equatable {
   final AppStatus status;
   final AuthUser authUser;
-  final CustomTheme theme;
+  final ThemeMode themeMode;
 
   const AppState({
     required this.status,
-    required this.theme,
     this.authUser = AuthUser.empty,
+    this.themeMode = ThemeMode.light, //default
   });
 
-  const AppState.authenticated(AuthUser authUser, {required CustomTheme theme})
-      : this(status: AppStatus.authenticated, authUser: authUser, theme: theme);
+  const AppState.authenticated(AuthUser authUser)
+      : this(
+          status: AppStatus.authenticated,
+          authUser: authUser,
+        );
 
-  const AppState.unauthenticated({required CustomTheme theme})
-      : this(status: AppStatus.unauthenticated, theme: theme);
+  const AppState.unauthenticated()
+      : this(
+          status: AppStatus.unauthenticated,
+        );
 
   @override
-  List<Object?> get props => [status, authUser, theme];
+  List<Object?> get props => [status, authUser, themeMode];
 
   AppState copyWith({
     AppStatus? status,
     AuthUser? authUser,
-    CustomTheme? theme,
+    ThemeMode? themeMode,
   }) {
     return AppState(
       status: status ?? this.status,
       authUser: authUser ?? this.authUser,
-      theme: theme ?? this.theme,
+      themeMode: themeMode ?? this.themeMode,
     );
   }
 }

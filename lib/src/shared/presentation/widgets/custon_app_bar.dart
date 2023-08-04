@@ -1,6 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_social_firebase/src/features/theme/domain/entities/custom_theme.dart';
+import 'package:flutter_social_firebase/src/features/theme/domain/repositories/theme_repository.dart';
+import 'package:flutter_social_firebase/src/features/theme/presentation/cubit/theme_cubit.dart';
+import 'package:loggy/loggy.dart';
 
-class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
+import '../../../services/service_locator.dart';
+import '../../app/blocs/app/app_bloc.dart';
+
+class CustomAppBar extends StatelessWidget
+    with UiLoggy
+    implements PreferredSizeWidget {
   final String title;
 
   const CustomAppBar({
@@ -15,8 +25,14 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       title: Text(title),
       actions: [
         IconButton(
-          onPressed: () {},
-          icon: const Icon(Icons.light_mode),
+          onPressed: () {
+            ThemeMode themeMode = context.read<AppBloc>().state.themeMode;
+            context.read<ThemeCubit>().switchTheme(themeMode);
+            loggy.debug("called cubit");
+          },
+          icon: Icon(context.read<AppBloc>().state.themeMode == ThemeMode.dark
+              ? Icons.light_mode
+              : Icons.dark_mode),
         )
       ],
     );

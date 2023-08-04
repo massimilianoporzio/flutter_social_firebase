@@ -3,8 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_social_firebase/src/features/auth/domain/repositories/auth_repository.dart';
 import 'package:flutter_social_firebase/src/features/auth/domain/usecases/sign_out_usecase.dart';
 import 'package:flutter_social_firebase/src/features/auth/domain/usecases/stream_auth_user_usecase.dart';
+import 'package:flutter_social_firebase/src/features/auth/presentation/blocs/sign_in/sign_in_cubit.dart';
 import 'package:flutter_social_firebase/src/features/theme/domain/repositories/theme_repository.dart';
-import 'package:flutter_social_firebase/src/features/theme/domain/usecases/stream_theme_use_case.dart';
+import 'package:flutter_social_firebase/src/features/theme/domain/usecases/switch_theme_usecase.dart';
+import 'package:flutter_social_firebase/src/features/theme/presentation/cubit/theme_cubit.dart';
 import 'package:loggy/loggy.dart';
 
 import '../../features/auth/domain/entities/auth_user.dart';
@@ -15,35 +17,32 @@ import 'blocs/app/app_bloc.dart';
 
 class App extends StatelessWidget with UiLoggy {
   final AuthUser _authUser;
-  final CustomTheme _theme;
+  final ThemeMode _themeMode;
+
   const App({
     required AuthUser authUser,
-    required CustomTheme theme,
+    required CustomTheme initialTheme,
     super.key,
-  })  : _theme = theme,
-        _authUser = authUser;
+  })  : _authUser = authUser,
+        _themeMode =
+            initialTheme == CustomTheme.dark ? ThemeMode.dark : ThemeMode.light;
 
   @override
   Widget build(BuildContext context) {
-    loggy.debug("BUILDING APP with user: $_authUser and theme: $_theme");
+    loggy.debug("BUILDING APP with user: $_authUser");
     return MultiRepositoryProvider(
       providers: [
         RepositoryProvider.value(value: sl<AuthRepository>()),
-        RepositoryProvider.value(value: sl<ThemeRepository>()),
       ],
       child: MultiBlocProvider(
         providers: [
-          BlocProvider<AppBloc>(
-            create: (context) => AppBloc(
-              streamAuthUserUseCase: sl<StreamAuthUserUseCase>(),
-              streamThemeUseCase: sl<StreamThemeUseCase>(),
-              signOutUseCase: sl<SignOutUseCase>(),
-              authUser: _authUser,
-              customTheme: _theme,
-            )
-              ..add(AppUserChanged(_authUser))
-              ..add(AppThemeChanged(_theme)),
+          BlocProvider<ThemeCubit>(
+            create: (context) =>
+                ThemeCubit(switchThemeUseCase: sl<SwitchThemeUseCase>()),
           ),
+          BlocProvider<SignInCubit>(
+            create: (context) => sl<SignInCubit>(),
+          )
         ],
         child: const AppView(),
       ),
@@ -56,15 +55,17 @@ class AppView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Clean Architecture',
-      themeMode: context.watch<AppBloc>().state.theme == CustomTheme.light
-          ? ThemeMode.light
-          : ThemeMode.dark,
-      theme: ThemeData.light(useMaterial3: true),
-      darkTheme: ThemeData.dark(useMaterial3: true),
-      home: const SignInScreen(),
+    return BlocBuilder<AppBloc, AppState>(
+      builder: (context, state) {
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'Clean Architecture',
+          themeMode: state.themeMode,
+          theme: ThemeData.light(useMaterial3: true),
+          darkTheme: ThemeData.dark(useMaterial3: true),
+          home: const SignInScreen(),
+        );
+      },
     );
   }
 }

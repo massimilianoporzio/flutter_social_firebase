@@ -3,14 +3,22 @@ import 'dart:async';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:flutter_social_firebase/firebase_options.dart';
 import 'package:flutter_social_firebase/src/features/auth/domain/entities/auth_user.dart';
 import 'package:flutter_social_firebase/src/features/auth/domain/repositories/auth_repository.dart';
+import 'package:flutter_social_firebase/src/features/auth/domain/usecases/sign_out_usecase.dart';
+import 'package:flutter_social_firebase/src/features/auth/domain/usecases/stream_auth_user_usecase.dart';
+import 'package:flutter_social_firebase/src/features/theme/data/repositories/theme_repository_impl.dart';
+import 'package:flutter_social_firebase/src/features/theme/domain/entities/custom_theme.dart';
 import 'package:flutter_social_firebase/src/features/theme/domain/repositories/theme_repository.dart';
+import 'package:flutter_social_firebase/src/features/theme/domain/usecases/stream_theme_usecase.dart';
+import 'package:flutter_social_firebase/src/features/theme/domain/usecases/switch_theme_usecase.dart';
 
 import 'package:flutter_social_firebase/src/services/service_locator.dart'
     as di;
+import 'package:flutter_social_firebase/src/shared/app/blocs/app/app_bloc.dart';
 import 'package:loggy/loggy.dart';
 
 import 'src/services/service_locator.dart';
@@ -34,13 +42,26 @@ Future<void> bootstrap(AppBuilder builder) async {
 void main() {
   bootstrap(
     () async {
-      return App(
-          authUser: await sl<AuthRepository>()
-              .authUserStream
-              .first, //recupero il primo dallo stream e smetto di ascoltare
-          theme: await sl<ThemeRepository>()
-              .currentThemeStream
-              .first); //init da shared_prefs
+      final user = await sl<AuthRepository>().authUserStream.first;
+      final initialTheme = await ThemeRepositoryImpl(localDatasource: sl())
+          .getTheme()
+          .first; //leggo lo stream da UN ALTRA ISTANZA DI REPO
+      return BlocProvider<AppBloc>(
+        create: (context) => AppBloc(
+            streamAuthUserUseCase: sl<StreamAuthUserUseCase>(),
+            streamThemeUseCase: sl<StreamThemeUseCase>(),
+            signOutUseCase: sl<SignOutUseCase>(),
+            authUser: user,
+            initialMode: initialTheme == CustomTheme.dark
+                ? ThemeMode.dark
+                : ThemeMode.light)
+          ..add(AppUserChanged(user))
+          ..add(AppThemeChanged(initialTheme)),
+        child: App(
+          authUser: user,
+          initialTheme: initialTheme,
+        ),
+      ); //init da shared_prefs
     },
   );
 }

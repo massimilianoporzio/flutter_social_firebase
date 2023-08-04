@@ -1,6 +1,7 @@
 import 'package:flutter_social_firebase/src/features/theme/domain/entities/custom_theme.dart';
 import 'package:flutter_social_firebase/src/features/theme/domain/repositories/theme_repository.dart';
-import 'package:flutter_social_firebase/src/features/theme/domain/usecases/stream_theme_use_case.dart';
+import 'package:flutter_social_firebase/src/features/theme/domain/usecases/stream_theme_usecase.dart';
+import 'package:flutter_social_firebase/src/features/theme/domain/usecases/switch_theme_usecase.dart';
 import 'package:flutter_social_firebase/src/shared/domain/usecases/base_usecase.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
