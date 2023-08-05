@@ -4,18 +4,13 @@ import 'dart:async';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'package:flutter_social_firebase/firebase_options.dart';
-import 'package:flutter_social_firebase/src/features/auth/domain/entities/auth_user.dart';
 import 'package:flutter_social_firebase/src/features/auth/domain/repositories/auth_repository.dart';
 import 'package:flutter_social_firebase/src/features/auth/domain/usecases/sign_out_usecase.dart';
 import 'package:flutter_social_firebase/src/features/auth/domain/usecases/stream_auth_user_usecase.dart';
 import 'package:flutter_social_firebase/src/features/theme/data/repositories/theme_repository_impl.dart';
 import 'package:flutter_social_firebase/src/features/theme/domain/entities/custom_theme.dart';
-import 'package:flutter_social_firebase/src/features/theme/domain/repositories/theme_repository.dart';
 import 'package:flutter_social_firebase/src/features/theme/domain/usecases/stream_theme_usecase.dart';
-import 'package:flutter_social_firebase/src/features/theme/domain/usecases/switch_theme_usecase.dart';
-
 import 'package:flutter_social_firebase/src/services/service_locator.dart'
     as di;
 import 'package:flutter_social_firebase/src/shared/app/blocs/app/app_bloc.dart';

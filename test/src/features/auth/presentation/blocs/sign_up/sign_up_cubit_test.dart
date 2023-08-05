@@ -15,9 +15,9 @@ import 'sign_up_cubit_test.mocks.dart';
 
 @GenerateMocks([SignUpUseCase])
 void main() {
-  late MockSignUpUsecase mockSignUpUsecase;
+  late MockSignUpUseCase mockSignUpUsecase;
   setUp(() {
-    mockSignUpUsecase = MockSignUpUsecase();
+    mockSignUpUsecase = MockSignUpUseCase();
   });
   final validEmail = Email(
     (p0) => p0.value = 'test@test.com',

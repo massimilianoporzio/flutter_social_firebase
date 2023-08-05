@@ -27,8 +27,11 @@ import 'package:mockito/mockito.dart' as _i1;
 /// See the documentation for Mockito's code generation for more information.
 class MockThemeRepository extends _i1.Mock implements _i2.ThemeRepository {
   @override
-  _i3.Stream<_i4.CustomTheme> get currentThemeStream => (super.noSuchMethod(
-        Invocation.getter(#currentThemeStream),
+  _i3.Stream<_i4.CustomTheme> getTheme() => (super.noSuchMethod(
+        Invocation.method(
+          #getTheme,
+          [],
+        ),
         returnValue: _i3.Stream<_i4.CustomTheme>.empty(),
         returnValueForMissingStub: _i3.Stream<_i4.CustomTheme>.empty(),
       ) as _i3.Stream<_i4.CustomTheme>);

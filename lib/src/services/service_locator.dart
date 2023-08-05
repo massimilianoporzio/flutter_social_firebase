@@ -1,27 +1,23 @@
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
-import 'package:flutter_social_firebase/src/features/auth/data/datasources/auth_remote_datasource.dart';
-import 'package:flutter_social_firebase/src/features/auth/data/datasources/auth_remote_datasource_firebase.dart';
-import 'package:flutter_social_firebase/src/features/auth/data/repositories/auth_repository_impl.dart';
-import 'package:flutter_social_firebase/src/features/auth/domain/entities/auth_user.dart';
-import 'package:flutter_social_firebase/src/features/auth/domain/repositories/auth_repository.dart';
-import 'package:flutter_social_firebase/src/features/auth/domain/usecases/sign_in_usecase.dart';
-import 'package:flutter_social_firebase/src/features/auth/domain/usecases/sign_out_usecase.dart';
-import 'package:flutter_social_firebase/src/features/auth/domain/usecases/sign_up_usecase.dart';
-import 'package:flutter_social_firebase/src/features/auth/domain/usecases/stream_auth_user_usecase.dart';
-import 'package:flutter_social_firebase/src/features/auth/presentation/blocs/sign_in/sign_in_cubit.dart';
-import 'package:flutter_social_firebase/src/features/auth/presentation/blocs/sign_up/sign_up_cubit.dart';
-import 'package:flutter_social_firebase/src/features/theme/data/datasources/theme_local_datasource.dart';
-import 'package:flutter_social_firebase/src/features/theme/data/repositories/theme_repository_impl.dart';
-import 'package:flutter_social_firebase/src/features/theme/domain/entities/custom_theme.dart';
-import 'package:flutter_social_firebase/src/features/theme/domain/repositories/theme_repository.dart';
-import 'package:flutter_social_firebase/src/features/theme/domain/usecases/switch_theme_usecase.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../features/auth/data/datasources/auth_local_datasource.dart';
+import '../features/auth/data/datasources/auth_remote_datasource.dart';
+import '../features/auth/data/datasources/auth_remote_datasource_firebase.dart';
+import '../features/auth/data/repositories/auth_repository_impl.dart';
+import '../features/auth/domain/repositories/auth_repository.dart';
+import '../features/auth/domain/usecases/sign_in_usecase.dart';
+import '../features/auth/domain/usecases/sign_out_usecase.dart';
+import '../features/auth/domain/usecases/sign_up_usecase.dart';
+import '../features/auth/domain/usecases/stream_auth_user_usecase.dart';
+import '../features/auth/presentation/blocs/sign_in/sign_in_cubit.dart';
+import '../features/auth/presentation/blocs/sign_up/sign_up_cubit.dart';
+import '../features/theme/data/datasources/theme_local_datasource.dart';
+import '../features/theme/data/repositories/theme_repository_impl.dart';
+import '../features/theme/domain/repositories/theme_repository.dart';
 import '../features/theme/domain/usecases/stream_theme_usecase.dart';
-import '../features/theme/presentation/cubit/theme_cubit.dart';
-import '../shared/app/blocs/app/app_bloc.dart';
+import '../features/theme/domain/usecases/switch_theme_usecase.dart';
 
 final sl = GetIt.instance;
 

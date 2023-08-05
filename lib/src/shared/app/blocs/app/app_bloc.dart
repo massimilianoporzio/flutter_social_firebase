@@ -3,16 +3,14 @@ import 'dart:async';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_social_firebase/src/features/auth/domain/usecases/sign_out_usecase.dart';
-import 'package:flutter_social_firebase/src/features/theme/domain/entities/custom_theme.dart';
-import 'package:flutter_social_firebase/src/features/theme/domain/repositories/theme_repository.dart';
-import 'package:flutter_social_firebase/src/features/theme/domain/usecases/stream_theme_usecase.dart';
-import 'package:flutter_social_firebase/src/features/theme/domain/usecases/switch_theme_usecase.dart';
-import 'package:flutter_social_firebase/src/logs/bloc_logger.dart';
-import 'package:flutter_social_firebase/src/shared/domain/usecases/base_usecase.dart';
 
 import '../../../../features/auth/domain/entities/auth_user.dart';
+import '../../../../features/auth/domain/usecases/sign_out_usecase.dart';
 import '../../../../features/auth/domain/usecases/stream_auth_user_usecase.dart';
+import '../../../../features/theme/domain/entities/custom_theme.dart';
+import '../../../../features/theme/domain/usecases/stream_theme_usecase.dart';
+import '../../../../logs/bloc_logger.dart';
+import '../../../domain/usecases/base_usecase.dart';
 
 part 'app_event.dart';
 part 'app_state.dart';

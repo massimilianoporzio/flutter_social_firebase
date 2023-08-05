@@ -1,8 +1,6 @@
 import 'package:flutter_social_firebase/src/features/theme/domain/entities/custom_theme.dart';
 import 'package:flutter_social_firebase/src/features/theme/domain/repositories/theme_repository.dart';
 import 'package:flutter_social_firebase/src/features/theme/domain/usecases/stream_theme_usecase.dart';
-import 'package:flutter_social_firebase/src/features/theme/domain/usecases/switch_theme_usecase.dart';
-import 'package:flutter_social_firebase/src/shared/domain/usecases/base_usecase.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
@@ -20,18 +18,18 @@ void main() {
   });
   const tCustomTheme = CustomTheme.dark;
   test('should call the getter on theme repo', () {
-    when(mockThemeRepository.currentThemeStream)
+    when(mockThemeRepository.getTheme())
         .thenAnswer((realInvocation) => Stream.value(tCustomTheme));
     //CHIAMO IL CASO D'USO
     streamThemeUsecase.call();
     //VERIFICO SIA CHIAMATO
-    verify(mockThemeRepository.currentThemeStream);
+    verify(mockThemeRepository.getTheme());
   });
 
   test(
       'should throw an exception when auth repo (themeStream getter) throws an Exception',
       () {
-    when(mockThemeRepository.currentThemeStream).thenThrow(Exception());
+    when(mockThemeRepository.getTheme()).thenThrow(Exception());
     final call = streamThemeUsecase.call;
     expect(() => call(), throwsA(isA<Exception>()));
   });
@@ -39,11 +37,11 @@ void main() {
       'should return the CORRECT CustomTheme when the getter on Theme repo return a CustomTheme',
       () async {
     //definisco come risponde il mock repo: con tauthUser (email: 'test@test.com'....)
-    when(mockThemeRepository.currentThemeStream)
+    when(mockThemeRepository.getTheme())
         .thenAnswer((realInvocation) => Stream.value(tCustomTheme));
 
     //Stream
-    final result = await streamThemeUsecase.call();
+    final result = streamThemeUsecase.call();
     //primo elemento dello stream
     final theme = await result
         .first; //torna il primo elemento e smette di ascoltare lo stream
