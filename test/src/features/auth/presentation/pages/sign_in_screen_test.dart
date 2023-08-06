@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_social_firebase/src/features/auth/presentation/blocs/email_status.dart';
 import 'package:flutter_social_firebase/src/features/auth/presentation/blocs/form_status.dart';
 import 'package:flutter_social_firebase/src/features/auth/presentation/blocs/password_status.dart';
 import 'package:flutter_social_firebase/src/features/auth/presentation/blocs/sign_in/sign_in_cubit.dart';
 import 'package:flutter_social_firebase/src/features/auth/presentation/pages/sign_in_screen.dart';
+import 'package:flutter_social_firebase/src/shared/app/blocs/app/app_bloc.dart';
+import 'package:flutter_social_firebase/src/shared/presentation/widgets/custon_app_bar.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mockito/annotations.dart';
@@ -11,7 +14,7 @@ import 'package:mockito/mockito.dart';
 
 import 'sign_in_screen_test.mocks.dart';
 
-@GenerateMocks([SignInCubit])
+@GenerateNiceMocks([MockSpec<SignInCubit>(), MockSpec<AppBloc>()])
 void main() {
   //le chiavi per trovare i widget
   const emailInputKey = Key('signIn_emailInput_textField');
@@ -21,36 +24,45 @@ void main() {
   const tEmail = 'test@gmail.com';
   const tPassword = 'password12345';
 
-  late MockSignInCubit mockSignUpCubit;
+  late MockSignInCubit mockSignInCubit;
+  late MockAppBloc mockAppBloc;
 
   //metodo per avere una MaterialApp da testare con SignUpScreen come home
   Widget makeTestableWidget() {
-    return const MaterialApp(
-      home: SignInScreen(),
+    return MaterialApp(
+      home: BlocProvider<SignInCubit>(
+        create: (context) => mockSignInCubit,
+        child: BlocProvider<AppBloc>.value(
+            value: mockAppBloc, child: const SignInScreen()),
+      ),
     );
   }
 
   setUpAll(() {
-    mockSignUpCubit = MockSignInCubit();
+    mockSignInCubit = MockSignInCubit();
+    mockAppBloc = MockAppBloc();
     //registro il mock
     final getIt = GetIt.instance;
-    getIt.registerFactory<SignInCubit>(() => mockSignUpCubit);
+    getIt.registerFactory<SignInCubit>(() => mockSignInCubit);
+    getIt.registerSingleton<AppBloc>(mockAppBloc);
+    when(mockAppBloc.state).thenReturn(
+        const AppState.unauthenticated().copyWith(themeMode: ThemeMode.light));
   });
   setUp(() async {
     //definisco il comportamento
-    when(mockSignUpCubit.state).thenReturn(const SignInState.initial());
+    when(mockSignInCubit.state).thenReturn(const SignInState.initial());
+
     //stub the state stream (ritorna uno stream con un initial)
-    when(mockSignUpCubit.stream).thenAnswer(
+    when(mockSignInCubit.stream).thenAnswer(
         (realInvocation) => Stream.fromIterable([const SignInState.initial()]));
   });
 //testo COSTRUENDO la UI con pumpWidget
-  testWidgets('renders a SignUpScreen', (tester) async {
-    await tester.pumpWidget(const MaterialApp(
-      home: SignInScreen(),
-    ));
+  testWidgets('renders a SignInScreen', (tester) async {
+    await tester.pumpWidget(makeTestableWidget());
     //dopo aver creato la UI testo che ci sia un widget e uno solo di tipo SignUpScreen
     expect(find.byType(SignInScreen), findsOneWidget);
   });
+
   testWidgets('emailChanged when email changes with 500 milliseconds debounce',
       (tester) async {
     //CREO UI
@@ -60,14 +72,14 @@ void main() {
     //creo un timer di 500 ms
     await tester.pump(const Duration(milliseconds: 500));
     //verifico che dopo i 500 ms sia chiamato emailChanged
-    verify(mockSignUpCubit.emailChanged(tEmail)).called(1);
+    verify(mockSignInCubit.emailChanged(tEmail)).called(1);
   });
   testWidgets('passwordChanged when passsword changes ', (tester) async {
     await tester.pumpWidget(makeTestableWidget());
 
     await tester.enterText(find.byKey(passwordInputKey), tPassword);
 
-    verify(mockSignUpCubit.passwordChanged(tPassword)).called(1);
+    verify(mockSignInCubit.passwordChanged(tPassword)).called(1);
   });
   testWidgets('AppBar & ElevatedButton are present with correct text',
       (tester) async {
@@ -92,7 +104,7 @@ void main() {
       const SignInState(formStatus: FormStatus.invalid),
     ];
 
-    when(mockSignUpCubit.stream).thenAnswer(
+    when(mockSignInCubit.stream).thenAnswer(
       (_) => Stream.fromIterable(expectedStates),
     );
 
@@ -114,7 +126,7 @@ void main() {
       const SignInState(formStatus: FormStatus.submissionFailure),
     ];
 
-    when(mockSignUpCubit.stream).thenAnswer(
+    when(mockSignInCubit.stream).thenAnswer(
       (_) => Stream.fromIterable(expectedStates),
     );
 
@@ -128,7 +140,7 @@ void main() {
   });
 
   testWidgets('Email field shows error for invalid email', (tester) async {
-    when(mockSignUpCubit.state).thenReturn(
+    when(mockSignInCubit.state).thenReturn(
       const SignInState(
         emailStatus:
             EmailStatus.invalid, //quando chiedo lo stato ritorno invalid
@@ -141,7 +153,7 @@ void main() {
 
   testWidgets('Password field shows error for invalid password',
       (tester) async {
-    when(mockSignUpCubit.state)
+    when(mockSignInCubit.state)
         .thenReturn(const SignInState(passwordStatus: PasswordStatus.invalid));
     await tester.pumpWidget(makeTestableWidget());
 
@@ -159,10 +171,10 @@ void main() {
     //creo un timer di 500 ms
     await tester.pump(const Duration(milliseconds: 500));
     //verifico che dopo i 500 ms sia chiamato resetEmailInput
-    verify(mockSignUpCubit.resetEmailInput()).called(1);
+    verify(mockSignInCubit.resetEmailInput()).called(1);
 
     //verifico che lo stato sia email.null
-    expect(mockSignUpCubit.state.email, isNull);
+    expect(mockSignInCubit.state.email, isNull);
   });
 
   testWidgets('resetPassword function is called when passwordInput is cleared',
@@ -176,22 +188,22 @@ void main() {
     //rimetto a zero
     await tester.enterText(find.byKey(passwordInputKey), "");
 
-    verify(mockSignUpCubit.resetPasswordInput()).called(1);
+    verify(mockSignInCubit.resetPasswordInput()).called(1);
 
     //verifico che lo stato sia password.null
-    expect(mockSignUpCubit.state.password, isNull);
+    expect(mockSignInCubit.state.password, isNull);
   });
   testWidgets('SignUp function is called when button is pressed',
       (tester) async {
     await tester.pumpWidget(makeTestableWidget());
     await tester.tap(find.byType(ElevatedButton));
-    verify(mockSignUpCubit.signIn()).called(1);
+    verify(mockSignInCubit.signIn()).called(1);
   });
 
   testWidgets(
       'SignUp button is disabled when formStatus is submissionInProgress',
       (tester) async {
-    when(mockSignUpCubit.state).thenReturn(
+    when(mockSignInCubit.state).thenReturn(
       const SignInState(
         formStatus: FormStatus.submissionInProgress,
       ),

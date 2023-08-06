@@ -15,10 +15,10 @@ import 'sign_in_cubit_test.mocks.dart';
 
 @GenerateMocks([SignInUseCase])
 void main() {
-  late MockSignInUsecase mockSignInUsecase;
+  late MockSignInUseCase mockSignInUsecase;
 
   setUp(() {
-    mockSignInUsecase = MockSignInUsecase();
+    mockSignInUsecase = MockSignInUseCase();
   });
 
   final validEmail = Email(

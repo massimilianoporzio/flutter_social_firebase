@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_social_firebase/src/shared/navigation/app_router.dart';
 import 'package:loggy/loggy.dart';
 
 import '../../features/auth/domain/entities/auth_user.dart';
@@ -51,13 +52,13 @@ class AppView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<AppBloc, AppState>(
       builder: (context, state) {
-        return MaterialApp(
+        return MaterialApp.router(
           debugShowCheckedModeBanner: false,
           title: 'Clean Architecture',
           themeMode: state.themeMode,
           theme: ThemeData.light(useMaterial3: true),
           darkTheme: ThemeData.dark(useMaterial3: true),
-          home: const SignInScreen(),
+          routerConfig: AppRouter(context.read<AppBloc>()).router,
         );
       },
     );

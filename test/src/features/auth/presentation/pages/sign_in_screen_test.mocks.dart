@@ -3,12 +3,14 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i4;
+import 'dart:async' as _i5;
 
-import 'package:flutter_bloc/flutter_bloc.dart' as _i6;
+import 'package:flutter_bloc/flutter_bloc.dart' as _i7;
 import 'package:flutter_social_firebase/src/features/auth/presentation/blocs/sign_in/sign_in_cubit.dart'
     as _i2;
-import 'package:flutter_social_firebase/src/logs/bloc_logger.dart' as _i5;
+import 'package:flutter_social_firebase/src/logs/bloc_logger.dart' as _i6;
+import 'package:flutter_social_firebase/src/shared/app/blocs/app/app_bloc.dart'
+    as _i4;
 import 'package:loggy/loggy.dart' as _i3;
 import 'package:mockito/mockito.dart' as _i1;
 
@@ -44,14 +46,20 @@ class _FakeLoggy_1<T extends _i3.LoggyType> extends _i1.SmartFake
         );
 }
 
+class _FakeAppState_2 extends _i1.SmartFake implements _i4.AppState {
+  _FakeAppState_2(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
 /// A class which mocks [SignInCubit].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockSignInCubit extends _i1.Mock implements _i2.SignInCubit {
-  MockSignInCubit() {
-    _i1.throwOnMissingStub(this);
-  }
-
   @override
   _i2.SignInState get state => (super.noSuchMethod(
         Invocation.getter(#state),
@@ -59,25 +67,35 @@ class MockSignInCubit extends _i1.Mock implements _i2.SignInCubit {
           this,
           Invocation.getter(#state),
         ),
+        returnValueForMissingStub: _FakeSignInState_0(
+          this,
+          Invocation.getter(#state),
+        ),
       ) as _i2.SignInState);
   @override
-  _i4.Stream<_i2.SignInState> get stream => (super.noSuchMethod(
+  _i5.Stream<_i2.SignInState> get stream => (super.noSuchMethod(
         Invocation.getter(#stream),
-        returnValue: _i4.Stream<_i2.SignInState>.empty(),
-      ) as _i4.Stream<_i2.SignInState>);
+        returnValue: _i5.Stream<_i2.SignInState>.empty(),
+        returnValueForMissingStub: _i5.Stream<_i2.SignInState>.empty(),
+      ) as _i5.Stream<_i2.SignInState>);
   @override
   bool get isClosed => (super.noSuchMethod(
         Invocation.getter(#isClosed),
         returnValue: false,
+        returnValueForMissingStub: false,
       ) as bool);
   @override
-  _i3.Loggy<_i5.BlocLoggy> get loggy => (super.noSuchMethod(
+  _i3.Loggy<_i6.BlocLoggy> get loggy => (super.noSuchMethod(
         Invocation.getter(#loggy),
-        returnValue: _FakeLoggy_1<_i5.BlocLoggy>(
+        returnValue: _FakeLoggy_1<_i6.BlocLoggy>(
           this,
           Invocation.getter(#loggy),
         ),
-      ) as _i3.Loggy<_i5.BlocLoggy>);
+        returnValueForMissingStub: _FakeLoggy_1<_i6.BlocLoggy>(
+          this,
+          Invocation.getter(#loggy),
+        ),
+      ) as _i3.Loggy<_i6.BlocLoggy>);
   @override
   void emailChanged(String? value) => super.noSuchMethod(
         Invocation.method(
@@ -95,32 +113,32 @@ class MockSignInCubit extends _i1.Mock implements _i2.SignInCubit {
         returnValueForMissingStub: null,
       );
   @override
-  _i4.Future<void> resetEmailInput() => (super.noSuchMethod(
+  _i5.Future<void> resetEmailInput() => (super.noSuchMethod(
         Invocation.method(
           #resetEmailInput,
           [],
         ),
-        returnValue: _i4.Future<void>.value(),
-        returnValueForMissingStub: _i4.Future<void>.value(),
-      ) as _i4.Future<void>);
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
   @override
-  _i4.Future<void> resetPasswordInput() => (super.noSuchMethod(
+  _i5.Future<void> resetPasswordInput() => (super.noSuchMethod(
         Invocation.method(
           #resetPasswordInput,
           [],
         ),
-        returnValue: _i4.Future<void>.value(),
-        returnValueForMissingStub: _i4.Future<void>.value(),
-      ) as _i4.Future<void>);
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
   @override
-  _i4.Future<void> signIn() => (super.noSuchMethod(
+  _i5.Future<void> signIn() => (super.noSuchMethod(
         Invocation.method(
           #signIn,
           [],
         ),
-        returnValue: _i4.Future<void>.value(),
-        returnValueForMissingStub: _i4.Future<void>.value(),
-      ) as _i4.Future<void>);
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
   @override
   void emit(_i2.SignInState? state) => super.noSuchMethod(
         Invocation.method(
@@ -130,7 +148,7 @@ class MockSignInCubit extends _i1.Mock implements _i2.SignInCubit {
         returnValueForMissingStub: null,
       );
   @override
-  void onChange(_i6.Change<_i2.SignInState>? change) => super.noSuchMethod(
+  void onChange(_i7.Change<_i2.SignInState>? change) => super.noSuchMethod(
         Invocation.method(
           #onChange,
           [change],
@@ -168,12 +186,147 @@ class MockSignInCubit extends _i1.Mock implements _i2.SignInCubit {
         returnValueForMissingStub: null,
       );
   @override
-  _i4.Future<void> close() => (super.noSuchMethod(
+  _i5.Future<void> close() => (super.noSuchMethod(
         Invocation.method(
           #close,
           [],
         ),
-        returnValue: _i4.Future<void>.value(),
-        returnValueForMissingStub: _i4.Future<void>.value(),
-      ) as _i4.Future<void>);
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
+}
+
+/// A class which mocks [AppBloc].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockAppBloc extends _i1.Mock implements _i4.AppBloc {
+  @override
+  _i4.AppState get state => (super.noSuchMethod(
+        Invocation.getter(#state),
+        returnValue: _FakeAppState_2(
+          this,
+          Invocation.getter(#state),
+        ),
+        returnValueForMissingStub: _FakeAppState_2(
+          this,
+          Invocation.getter(#state),
+        ),
+      ) as _i4.AppState);
+  @override
+  _i5.Stream<_i4.AppState> get stream => (super.noSuchMethod(
+        Invocation.getter(#stream),
+        returnValue: _i5.Stream<_i4.AppState>.empty(),
+        returnValueForMissingStub: _i5.Stream<_i4.AppState>.empty(),
+      ) as _i5.Stream<_i4.AppState>);
+  @override
+  bool get isClosed => (super.noSuchMethod(
+        Invocation.getter(#isClosed),
+        returnValue: false,
+        returnValueForMissingStub: false,
+      ) as bool);
+  @override
+  _i3.Loggy<_i6.BlocLoggy> get loggy => (super.noSuchMethod(
+        Invocation.getter(#loggy),
+        returnValue: _FakeLoggy_1<_i6.BlocLoggy>(
+          this,
+          Invocation.getter(#loggy),
+        ),
+        returnValueForMissingStub: _FakeLoggy_1<_i6.BlocLoggy>(
+          this,
+          Invocation.getter(#loggy),
+        ),
+      ) as _i3.Loggy<_i6.BlocLoggy>);
+  @override
+  _i5.Future<void> close() => (super.noSuchMethod(
+        Invocation.method(
+          #close,
+          [],
+        ),
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
+  @override
+  void add(_i4.AppEvent? event) => super.noSuchMethod(
+        Invocation.method(
+          #add,
+          [event],
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  void onEvent(_i4.AppEvent? event) => super.noSuchMethod(
+        Invocation.method(
+          #onEvent,
+          [event],
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  void emit(_i4.AppState? state) => super.noSuchMethod(
+        Invocation.method(
+          #emit,
+          [state],
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  void on<E extends _i4.AppEvent>(
+    _i7.EventHandler<E, _i4.AppState>? handler, {
+    _i7.EventTransformer<E>? transformer,
+  }) =>
+      super.noSuchMethod(
+        Invocation.method(
+          #on,
+          [handler],
+          {#transformer: transformer},
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  void onTransition(_i7.Transition<_i4.AppEvent, _i4.AppState>? transition) =>
+      super.noSuchMethod(
+        Invocation.method(
+          #onTransition,
+          [transition],
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  void onChange(_i7.Change<_i4.AppState>? change) => super.noSuchMethod(
+        Invocation.method(
+          #onChange,
+          [change],
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  void addError(
+    Object? error, [
+    StackTrace? stackTrace,
+  ]) =>
+      super.noSuchMethod(
+        Invocation.method(
+          #addError,
+          [
+            error,
+            stackTrace,
+          ],
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  void onError(
+    Object? error,
+    StackTrace? stackTrace,
+  ) =>
+      super.noSuchMethod(
+        Invocation.method(
+          #onError,
+          [
+            error,
+            stackTrace,
+          ],
+        ),
+        returnValueForMissingStub: null,
+      );
 }
