@@ -194,5 +194,107 @@ void main() {
         ..add(const AppSignOutRequested()),
       expect: () => const [AppState.unauthenticated()],
     );
+    blocTest<AppBloc, AppState>(
+      'emits [themeMode: dark] when user switch from light',
+      setUp: () {},
+      build: () => AppBloc(
+          streamAuthUserUseCase: mockStreamAuthUserUseCase,
+          signOutUseCase: mockSignOutUseCase,
+          authUser: AuthUser.empty,
+          initialMode: ThemeMode.light,
+          streamThemeUseCase: mockStreamThemeUseCase),
+      act: (bloc) => bloc.add(
+        const AppThemeChanged(
+          CustomTheme.dark,
+        ),
+      ),
+      expect: () => [
+        const AppState(
+            status: AppStatus.unauthenticated,
+            authUser: AuthUser.empty,
+            themeMode: ThemeMode.dark)
+      ],
+      verify: (_) {
+        verify(mockStreamAuthUserUseCase()).called(1);
+      },
+    );
+    blocTest<AppBloc, AppState>(
+      'emits [themeMode: light] when user switch from dark',
+      setUp: () {},
+      build: () => AppBloc(
+          streamAuthUserUseCase: mockStreamAuthUserUseCase,
+          signOutUseCase: mockSignOutUseCase,
+          authUser: AuthUser.empty,
+          initialMode: ThemeMode.dark,
+          streamThemeUseCase: mockStreamThemeUseCase),
+      act: (bloc) => bloc.add(
+        const AppThemeChanged(
+          CustomTheme.light,
+        ),
+      ),
+      expect: () => [
+        const AppState(
+            status: AppStatus.unauthenticated,
+            authUser: AuthUser.empty,
+            themeMode: ThemeMode.light)
+      ],
+      verify: (_) {
+        verify(mockStreamAuthUserUseCase()).called(1);
+      },
+    );
+    blocTest<AppBloc, AppState>(
+      'emits [themeMode: light] when user switch from dark,does not emit again if the event is added twice ',
+      setUp: () {},
+      build: () => AppBloc(
+          streamAuthUserUseCase: mockStreamAuthUserUseCase,
+          signOutUseCase: mockSignOutUseCase,
+          authUser: AuthUser.empty,
+          initialMode: ThemeMode.dark,
+          streamThemeUseCase: mockStreamThemeUseCase),
+      act: (bloc) => bloc
+        ..add(const AppThemeChanged(
+          CustomTheme.light,
+        ))
+        ..add(
+          const AppThemeChanged(
+            CustomTheme.light,
+          ),
+        ),
+      expect: () => [
+        const AppState(
+            status: AppStatus.unauthenticated,
+            authUser: AuthUser.empty,
+            themeMode: ThemeMode.light)
+      ],
+    );
+    blocTest<AppBloc, AppState>(
+      'emits [themeMode: dark] when user switch from light,does not emit again if the event is added twice ',
+      setUp: () {},
+      build: () => AppBloc(
+          streamAuthUserUseCase: mockStreamAuthUserUseCase,
+          signOutUseCase: mockSignOutUseCase,
+          authUser: AuthUser.empty,
+          initialMode: ThemeMode.light,
+          streamThemeUseCase: mockStreamThemeUseCase),
+      act: (bloc) => bloc
+        ..add(const AppThemeChanged(
+          CustomTheme.dark,
+        ))
+        ..add(
+          const AppThemeChanged(
+            CustomTheme.dark,
+          ),
+        ),
+      expect: () => [
+        const AppState(
+            status: AppStatus.unauthenticated,
+            authUser: AuthUser.empty,
+            themeMode: ThemeMode.dark)
+      ],
+      // verify: (_) {
+      //   verify(mockSwitchThemeUseCase(SwitchThemeParams(isDarkMode: false)))
+      //       .called(1);
+      // },
+    );
   });
 }
