@@ -27,10 +27,10 @@ void main() {
   late MockSwitchThemeUseCase mockSwitchThemeUseCase;
 
   const initialMode = ThemeMode.dark;
-  late AppBloc appBloc;
+
   const tAuthUser = AuthUser(id: 'testId', email: 'test@test.com');
 
-  setUpAll(() {
+  setUp(() {
     mockSignOutUseCase = MockSignOutUseCase();
     mockStreamAuthUserUseCase = MockStreamAuthUserUseCase();
     mockStreamThemeUseCase = MockStreamThemeUseCase();
@@ -179,6 +179,8 @@ void main() {
         when(mockSignOutUseCase(NoParams())).thenAnswer(
           (_) => Future.value(),
         );
+        when(mockStreamAuthUserUseCase())
+            .thenAnswer((_) => Stream.value(AuthUser.empty));
       },
       build: () => AppBloc(
         streamAuthUserUseCase: mockStreamAuthUserUseCase,
