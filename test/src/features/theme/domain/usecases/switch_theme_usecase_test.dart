@@ -14,19 +14,16 @@ import 'switch_theme_usecase_test.mocks.dart' as switchMocks;
 ])
 void main() {
   late switchMocks.MockThemeRepository mockThemeRepository;
-  late switchMocks.MockAppBloc mockAppBloc;
+  // late switchMocks.MockAppBloc mockAppBloc;
   late SwitchThemeUseCase switchThemeUseCase; //ogg da testare
   setUp(() {
     mockThemeRepository = switchMocks.MockThemeRepository();
-    mockAppBloc = switchMocks.MockAppBloc();
+    // mockAppBloc = switchMocks.MockAppBloc();
     switchThemeUseCase =
         SwitchThemeUseCase(themeRepository: mockThemeRepository);
   });
   const tCustomThemeDark = CustomTheme.dark;
   const tCustomThemeLight = CustomTheme.light;
-
-  const tIsDarkMode = true;
-  const tIsNotDarkMode = false;
 
   final tParamsDark = SwitchThemeParams(isDarkMode: true);
   final tParamsLight = SwitchThemeParams(isDarkMode: false);
