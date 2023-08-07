@@ -291,10 +291,6 @@ void main() {
             authUser: AuthUser.empty,
             themeMode: ThemeMode.dark)
       ],
-      // verify: (_) {
-      //   verify(mockSwitchThemeUseCase(SwitchThemeParams(isDarkMode: false)))
-      //       .called(1);
-      // },
     );
   });
 }
