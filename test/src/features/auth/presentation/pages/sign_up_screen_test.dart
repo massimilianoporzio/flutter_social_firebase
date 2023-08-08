@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_social_firebase/src/features/auth/presentation/blocs/email_status.dart';
 import 'package:flutter_social_firebase/src/features/auth/presentation/blocs/form_status.dart';
 import 'package:flutter_social_firebase/src/features/auth/presentation/blocs/password_status.dart';
 import 'package:flutter_social_firebase/src/features/auth/presentation/blocs/sign_up/sign_up_cubit.dart';
 import 'package:flutter_social_firebase/src/features/auth/presentation/pages/sign_up_screen.dart';
+import 'package:flutter_social_firebase/src/shared/app/blocs/app/app_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mockito/annotations.dart';
@@ -11,7 +13,7 @@ import 'package:mockito/mockito.dart';
 
 import 'sign_up_screen_test.mocks.dart';
 
-@GenerateMocks([SignUpCubit])
+@GenerateNiceMocks([MockSpec<SignUpCubit>(), MockSpec<AppBloc>()])
 void main() {
   //le chiavi per trovare i widget
   const emailInputKey = Key('signUp_emailInput_textField');
@@ -22,19 +24,28 @@ void main() {
   const tPassword = 'password12345';
 
   late MockSignUpCubit mockSignUpCubit;
+  late MockAppBloc mockAppBloc;
 
   //metodo per avere una MaterialApp da testare con SignUpScreen come home
   Widget makeTestableWidget() {
-    return const MaterialApp(
-      home: SignUpScreen(),
+    return MaterialApp(
+      home: BlocProvider<SignUpCubit>(
+        create: (context) => mockSignUpCubit,
+        child: BlocProvider<AppBloc>.value(
+          value: mockAppBloc,
+          child: const SignUpScreen(),
+        ),
+      ),
     );
   }
 
   setUpAll(() {
     mockSignUpCubit = MockSignUpCubit();
+    mockAppBloc = MockAppBloc();
     //registro il mock
     final getIt = GetIt.instance;
     getIt.registerFactory<SignUpCubit>(() => mockSignUpCubit);
+    getIt.registerSingleton<AppBloc>(mockAppBloc);
   });
   setUp(() async {
     //definisco il comportamento
