@@ -20,6 +20,9 @@ void main() {
   const passwordInputKey = Key('signUp_passwordInput_textField');
   const signUpButtonKey = Key('signUp_continue_elevatedButton');
 
+  const passwordClearIconButtonKey = Key('signUp_passwordInput_iconButton');
+  const emailClearIconButtonKey = Key('signUp_emailInput_iconButton');
+
   const tEmail = 'test@gmail.com';
   const tPassword = 'password12345';
 
@@ -29,12 +32,10 @@ void main() {
   //metodo per avere una MaterialApp da testare con SignUpScreen come home
   Widget makeTestableWidget() {
     return MaterialApp(
-      home: BlocProvider<SignUpCubit>(
-        create: (context) => mockSignUpCubit,
+      home: BlocProvider<SignUpCubit>.value(
+        value: mockSignUpCubit,
         child: BlocProvider<AppBloc>.value(
-          value: mockAppBloc,
-          child: const SignUpScreen(),
-        ),
+            value: mockAppBloc, child: const SignUpScreen()),
       ),
     );
   }
@@ -192,6 +193,38 @@ void main() {
 
     //verifico che lo stato sia password.null
     expect(mockSignUpCubit.state.password, isNull);
+  });
+  testWidgets('resetPassword function is called when clear icon is tapped',
+      (tester) async {
+    when(mockSignUpCubit.state).thenReturn(
+      const SignUpState(
+          formStatus: FormStatus.valid, passwordStatus: PasswordStatus.valid),
+    );
+    //CREO UI
+    await tester.pumpWidget(makeTestableWidget());
+
+    await tester.tap(find.byKey(passwordClearIconButtonKey));
+
+    verify(mockSignUpCubit.resetPasswordInput()).called(1);
+
+    //verifico che lo stato sia password.null
+    expect(mockSignUpCubit.state.password, isNull);
+  });
+  testWidgets('resetEmail function is called when clear icon is tapped',
+      (tester) async {
+    when(mockSignUpCubit.state).thenReturn(
+      const SignUpState(
+          formStatus: FormStatus.valid, emailStatus: EmailStatus.valid),
+    );
+    //CREO UI
+    await tester.pumpWidget(makeTestableWidget());
+
+    await tester.tap(find.byKey(emailClearIconButtonKey));
+
+    verify(mockSignUpCubit.resetEmailInput()).called(1);
+
+    //verifico che lo stato sia password.null
+    expect(mockSignUpCubit.state.email, isNull);
   });
   testWidgets('SignUp function is called when button is pressed',
       (tester) async {

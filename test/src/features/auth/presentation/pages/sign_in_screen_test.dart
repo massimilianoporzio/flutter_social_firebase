@@ -212,6 +212,22 @@ void main() {
     //verifico che lo stato sia password.null
     expect(mockSignInCubit.state.password, isNull);
   });
+  testWidgets('resetEmail function is called when clear icon is tapped',
+      (tester) async {
+    when(mockSignInCubit.state).thenReturn(
+      const SignInState(
+          formStatus: FormStatus.valid, emailStatus: EmailStatus.valid),
+    );
+    //CREO UI
+    await tester.pumpWidget(makeTestableWidget());
+
+    await tester.tap(find.byKey(emailClearIconButtonKey));
+
+    verify(mockSignInCubit.resetEmailInput()).called(1);
+
+    //verifico che lo stato sia password.null
+    expect(mockSignInCubit.state.email, isNull);
+  });
   testWidgets('SignUp function is called when button is pressed',
       (tester) async {
     await tester.pumpWidget(makeTestableWidget());
