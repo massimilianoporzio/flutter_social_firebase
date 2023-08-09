@@ -110,6 +110,7 @@ class __SignInViewState extends State<_SignInView> with UiLoggy {
                     suffixIcon: state.emailStatus == EmailStatus.unknown
                         ? null
                         : IconButton(
+                            key: const Key('signIn_emailInput_iconButton'),
                             // Icon to
                             icon: const Icon(Icons.clear), // clear text
                             onPressed: clearTextEmail,
@@ -146,6 +147,7 @@ class __SignInViewState extends State<_SignInView> with UiLoggy {
                       suffixIcon: state.passwordStatus == PasswordStatus.unknown
                           ? null
                           : IconButton(
+                              key: const Key('signIn_passwordInput_iconButton'),
                               // Icon to
                               icon: const Icon(Icons.clear), // clear text
                               onPressed: clearTextPassword,

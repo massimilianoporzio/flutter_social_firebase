@@ -6,7 +6,7 @@ import 'package:flutter_social_firebase/src/features/auth/presentation/blocs/pas
 import 'package:flutter_social_firebase/src/features/auth/presentation/blocs/sign_in/sign_in_cubit.dart';
 import 'package:flutter_social_firebase/src/features/auth/presentation/pages/sign_in_screen.dart';
 import 'package:flutter_social_firebase/src/shared/app/blocs/app/app_bloc.dart';
-import 'package:flutter_social_firebase/src/shared/presentation/widgets/custon_app_bar.dart';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mockito/annotations.dart';
@@ -20,6 +20,8 @@ void main() {
   const emailInputKey = Key('signIn_emailInput_textField');
   const passwordInputKey = Key('signIn_passwordInput_textField');
   const signInButtonKey = Key('signIn_continue_elevatedButton');
+  const passwordClearIconButtonKey = Key('signIn_passwordInput_iconButton');
+  const emailClearIconButtonKey = Key('signIn_emailInput_iconButton');
 
   const tEmail = 'test@gmail.com';
   const tPassword = 'password12345';
@@ -30,8 +32,8 @@ void main() {
   //metodo per avere una MaterialApp da testare con SignUpScreen come home
   Widget makeTestableWidget() {
     return MaterialApp(
-      home: BlocProvider<SignInCubit>(
-        create: (context) => mockSignInCubit,
+      home: BlocProvider<SignInCubit>.value(
+        value: mockSignInCubit,
         child: BlocProvider<AppBloc>.value(
             value: mockAppBloc, child: const SignInScreen()),
       ),
@@ -187,6 +189,23 @@ void main() {
     await tester.pump(const Duration(milliseconds: 500));
     //rimetto a zero
     await tester.enterText(find.byKey(passwordInputKey), "");
+
+    verify(mockSignInCubit.resetPasswordInput()).called(1);
+
+    //verifico che lo stato sia password.null
+    expect(mockSignInCubit.state.password, isNull);
+  });
+
+  testWidgets('resetPassword function is called when clear icon is tapped',
+      (tester) async {
+    when(mockSignInCubit.state).thenReturn(
+      const SignInState(
+          formStatus: FormStatus.valid, passwordStatus: PasswordStatus.valid),
+    );
+    //CREO UI
+    await tester.pumpWidget(makeTestableWidget());
+
+    await tester.tap(find.byKey(passwordClearIconButtonKey));
 
     verify(mockSignInCubit.resetPasswordInput()).called(1);
 

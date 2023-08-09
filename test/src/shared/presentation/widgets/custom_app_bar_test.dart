@@ -46,4 +46,8 @@ void main() {
     expect(find.byType(CustomAppBar), findsOneWidget);
     expect(find.text(title), findsWidgets);
   });
+  testWidgets('switchTheme', (tester) async {
+//CREO UI
+    await tester.pumpWidget(makeTestableWidget());
+  });
 }
