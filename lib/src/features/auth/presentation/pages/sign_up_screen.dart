@@ -7,6 +7,7 @@ import 'package:flutter_social_firebase/src/features/auth/presentation/blocs/ema
 import 'package:flutter_social_firebase/src/features/auth/presentation/blocs/form_status.dart';
 import 'package:flutter_social_firebase/src/features/auth/presentation/blocs/password_status.dart';
 import 'package:flutter_social_firebase/src/features/auth/presentation/blocs/sign_up/sign_up_cubit.dart';
+import 'package:go_router/go_router.dart';
 import 'package:loggy/loggy.dart';
 
 import '../../../../services/service_locator.dart';
@@ -174,6 +175,15 @@ class __SignupViewState extends State<_SignupView> with UiLoggy {
                         },
                   child: const Text('Sign Up'),
                 ),
+                const SizedBox(
+                  height: 8.0,
+                ),
+                TextButton(
+                    key: const Key('go_to_signIn_continue_textButton'),
+                    onPressed: () {
+                      context.goNamed('sign-in');
+                    },
+                    child: const Text('Go to Sign In'))
               ],
             ),
           );

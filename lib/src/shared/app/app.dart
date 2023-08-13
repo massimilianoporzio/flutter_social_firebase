@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_social_firebase/src/shared/navigation/app_router.dart';
+import 'package:flutter_social_firebase/src/shared/presentation/widgets/widgets.dart';
+import 'package:go_router/go_router.dart';
 import 'package:loggy/loggy.dart';
 
 import '../../features/auth/domain/entities/auth_user.dart';
 import '../../features/auth/domain/repositories/auth_repository.dart';
 import '../../features/auth/presentation/blocs/sign_in/sign_in_cubit.dart';
-import '../../features/auth/presentation/pages/sign_in_screen.dart';
 import '../../features/theme/domain/entities/custom_theme.dart';
 import '../../features/theme/domain/usecases/switch_theme_usecase.dart';
 import '../../features/theme/presentation/cubit/theme_cubit.dart';
@@ -61,6 +62,45 @@ class AppView extends StatelessWidget {
           routerConfig: AppRouter(context.read<AppBloc>()).router,
         );
       },
+    );
+  }
+}
+
+//TEMPORARY HOME SCREEN
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: const CustomAppBar(title: 'Home Screen'),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Row(
+            children: [],
+          ),
+          ElevatedButton(
+            onPressed: () {
+              context.pushNamed(
+                  'sign-up'); //PUSH NOT GoNamed (goNamed non tiene stack con back button)
+            },
+            child: const Text('Sign Up'),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              context.pushNamed('sign-in');
+            },
+            child: const Text('Sign In'),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              context.read<AppBloc>().add(const AppSignOutRequested());
+            },
+            child: const Text('Sign Out'),
+          ),
+        ],
+      ),
     );
   }
 }

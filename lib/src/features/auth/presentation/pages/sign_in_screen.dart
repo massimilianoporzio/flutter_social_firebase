@@ -4,6 +4,7 @@ import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_social_firebase/src/shared/presentation/widgets/widgets.dart';
+import 'package:go_router/go_router.dart';
 import 'package:loggy/loggy.dart';
 
 import '../../../../services/service_locator.dart';
@@ -177,6 +178,15 @@ class __SignInViewState extends State<_SignInView> with UiLoggy {
                         },
                   child: const Text('Sign In'),
                 ),
+                const SizedBox(
+                  height: 8.0,
+                ),
+                TextButton(
+                    key: const Key('go_to_signUp_continue_textButton'),
+                    onPressed: () {
+                      context.goNamed('sign-up');
+                    },
+                    child: const Text('Go to Sign Up'))
               ],
             ),
           );
