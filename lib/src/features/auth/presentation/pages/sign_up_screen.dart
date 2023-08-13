@@ -10,6 +10,7 @@ import 'package:flutter_social_firebase/src/features/auth/presentation/blocs/sig
 import 'package:loggy/loggy.dart';
 
 import '../../../../services/service_locator.dart';
+import '../../../../shared/presentation/widgets/widgets.dart';
 
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({super.key});
@@ -45,9 +46,8 @@ class __SignupViewState extends State<_SignupView> with UiLoggy {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: const Text('Sign Up'),
+      appBar: const CustomAppBar(
+        title: 'Sign Up',
       ),
       body: BlocConsumer<SignUpCubit, SignUpState>(
         listener: (context, state) {
@@ -183,13 +183,13 @@ class __SignupViewState extends State<_SignupView> with UiLoggy {
   }
 
   void clearTextPassword() {
-    context.read<SignUpCubit>().resetEmailInput();
+    context.read<SignUpCubit>().resetPasswordInput();
 
     emailController.clear();
   }
 
   void clearTextEmail() {
-    context.read<SignUpCubit>().resetPasswordInput();
+    context.read<SignUpCubit>().resetEmailInput();
 
     passwordController.clear();
   }

@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_social_firebase/src/shared/presentation/widgets/custon_app_bar.dart';
+import 'package:flutter_social_firebase/src/shared/presentation/widgets/widgets.dart';
 import 'package:loggy/loggy.dart';
 
 import '../../../../services/service_locator.dart';

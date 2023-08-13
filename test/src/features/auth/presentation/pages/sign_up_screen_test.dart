@@ -47,6 +47,8 @@ void main() {
     final getIt = GetIt.instance;
     getIt.registerFactory<SignUpCubit>(() => mockSignUpCubit);
     getIt.registerSingleton<AppBloc>(mockAppBloc);
+    when(mockAppBloc.state).thenReturn(
+        const AppState.unauthenticated().copyWith(themeMode: ThemeMode.light));
   });
   setUp(() async {
     //definisco il comportamento
@@ -57,9 +59,7 @@ void main() {
   });
 //testo COSTRUENDO la UI con pumpWidget
   testWidgets('renders a SignUpScreen', (tester) async {
-    await tester.pumpWidget(const MaterialApp(
-      home: SignUpScreen(),
-    ));
+    await tester.pumpWidget(makeTestableWidget());
     //dopo aver creato la UI testo che ci sia un widget e uno solo di tipo SignUpScreen
     expect(find.byType(SignUpScreen), findsOneWidget);
   });
