@@ -15,6 +15,7 @@ void main() {
   const title = "App Bar";
   late MockAppBloc mockAppBloc;
   late MockThemeCubit mockThemeCubit;
+  const switchThemeIconButtonKey = Key('custmomAppBarSwitchThemeIconButton');
   //metodo per avere una MaterialApp da testare con SignUpScreen come home
   Widget makeTestableWidget() {
     return MaterialApp(
@@ -49,5 +50,9 @@ void main() {
   testWidgets('switchTheme', (tester) async {
 //CREO UI
     await tester.pumpWidget(makeTestableWidget());
+    //cerco l'icona e la premo
+    await tester.tap(find.byKey(switchThemeIconButtonKey));
+    //verifico di aver chiamato il cubit
+    verify(mockThemeCubit.switchTheme(any)).called(1);
   });
 }

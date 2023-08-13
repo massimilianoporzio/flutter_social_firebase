@@ -22,10 +22,11 @@ class CustomAppBar extends StatelessWidget
       title: Text(title),
       actions: [
         IconButton(
+          key: const Key('custmomAppBarSwitchThemeIconButton'),
           onPressed: () {
             ThemeMode themeMode = context.read<AppBloc>().state.themeMode;
             context.read<ThemeCubit>().switchTheme(themeMode);
-            loggy.debug("called cubit");
+            // loggy.debug("called cubit");
           },
           icon: Icon(context.read<AppBloc>().state.themeMode == ThemeMode.dark
               ? Icons.light_mode
