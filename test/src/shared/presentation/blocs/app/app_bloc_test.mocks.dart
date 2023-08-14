@@ -159,12 +159,12 @@ class MockSwitchThemeUseCase extends _i1.Mock
         ),
       ) as _i3.ThemeRepository);
   @override
-  _i5.FutureOr<void> call(_i11.SwitchThemeParams? params) =>
-      (super.noSuchMethod(
+  _i5.Future<void> call(_i11.SwitchThemeParams? params) => (super.noSuchMethod(
         Invocation.method(
           #call,
           [params],
         ),
-        returnValueForMissingStub: null,
-      ) as _i5.FutureOr<void>);
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
 }

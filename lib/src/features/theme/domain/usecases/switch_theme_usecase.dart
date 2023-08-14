@@ -20,7 +20,7 @@ class SwitchThemeUseCase extends UseCase<void, SwitchThemeParams> {
   });
 
   @override
-  FutureOr<void> call(SwitchThemeParams params) async {
+  Future<void> call(SwitchThemeParams params) async {
     if (params.isDarkMode) {
       themeRepository.saveTheme(CustomTheme.light);
     } else {
