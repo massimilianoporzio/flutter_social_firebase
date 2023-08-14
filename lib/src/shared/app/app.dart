@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_social_firebase/src/shared/navigation/app_router.dart';
 import 'package:flutter_social_firebase/src/shared/presentation/widgets/widgets.dart';
+import 'package:flutter_social_firebase/src/shared/theme/app_theme.dart';
 import 'package:go_router/go_router.dart';
 import 'package:loggy/loggy.dart';
 
@@ -57,8 +58,8 @@ class AppView extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           title: 'Clean Architecture',
           themeMode: state.themeMode,
-          theme: ThemeData.light(useMaterial3: true),
-          darkTheme: ThemeData.dark(useMaterial3: true),
+          theme: AppTheme.theme,
+          darkTheme: AppTheme.darkTheme,
           routerConfig: AppRouter(context.read<AppBloc>()).router,
         );
       },

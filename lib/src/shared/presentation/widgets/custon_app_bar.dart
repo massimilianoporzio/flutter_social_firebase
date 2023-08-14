@@ -19,7 +19,9 @@ class CustomAppBar extends StatelessWidget
   Widget build(BuildContext context) {
     return AppBar(
       centerTitle: true,
-      title: Text(title),
+      title: Text(
+        title,
+      ),
       actions: [
         IconButton(
           key: const Key('custmomAppBarSwitchThemeIconButton'),
