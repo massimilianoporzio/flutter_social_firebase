@@ -9,7 +9,7 @@ abstract class RemoteDataSource {
     required Map<String, dynamic> data,
   });
   //Aggiorna un doc dentro un collezione
-  Future<String> updateDocument({
+  Future<void> updateDocument({
     required String collectionPath,
     required String documentId,
     required Map<String, dynamic> data,
@@ -38,5 +38,8 @@ abstract class RemoteDataSource {
   Stream<List<T>> streamCollection<T>({
     required String collectionPath,
     required ObjectMapper<T> objectMapper,
+    String field, //per fare una query su un campo
+    dynamic isEqualToValue, //uguale a un certo valore
+    dynamic arrayContainsValue, //o se un array contiene un certo valore
   });
 }

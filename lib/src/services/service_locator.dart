@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
+import 'package:cloud_firestore/cloud_firestore.dart' as cloud_firestore;
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -29,6 +30,9 @@ Future<void> init() async {
   //*firebase
   sl.registerSingleton<firebase_auth.FirebaseAuth>(
       firebase_auth.FirebaseAuth.instance);
+  //*firestore
+  sl.registerLazySingleton<cloud_firestore.FirebaseFirestore>(
+      () => cloud_firestore.FirebaseFirestore.instance);
 
   //**** DATASOURCES ****
   //*AUTH
